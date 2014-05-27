@@ -1,0 +1,27 @@
+{
+  "name": "nanar_server",
+  "description": "RESTful API for Nanar app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "latest",
+    "passport": "~0.1.18",
+    "passport-http-bearer": "~1.0.1",
+    "passport-local": "~0.1.6",
+    "httpreq": "~0.3.8",
+    "winston": "~0.7.3",
+    "colors": "~0.6.2",
+    "cookie-parser": "~1.0.1",
+    "body-parser": "~1.0.2",
+    "raw-body": "~1.1.4",
+    "type-is": "~1.1.0",
+    "multipart": "~0.1.5",
+    "connect-multiparty": "~1.0.3",
+    "async": "~0.8.0",
+    "mongoose": "latest",
+    "express-session": "~1.1.0",
+    "node-gcm": "~0.9.11",
+    "request": "~2.36.0"
+  },
+  "devDependencies": {}
+}
