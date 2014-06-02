@@ -1,0 +1,6 @@
+<resources>
+    <color name="bg_navigation_drawer">#ddd</color>
+    <color name="navigation_drawer_header">#555</color>
+    <color name="navigation_drawer_item">#111</color>
+
+</resources>

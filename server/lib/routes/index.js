@@ -8,7 +8,7 @@ module.exports.init = function (app) {
 	});
 
 	// init routes
-	var routes = ['users', 'videos'];
+	var routes = ['users', 'videos', 'tags'];
 
 	for (var i = 0; i < routes.length; i++) {
 		require('./' + routes[i]).init(app);

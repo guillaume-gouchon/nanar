@@ -10,7 +10,7 @@ module.exports = {
 		if (status == 500) {
 			logger.error(err.error || err);
 		}
-		res.json({ message: message }, status);
+		res.json(status, { message: message });
 	},
 
 	Error: function (error, message) {

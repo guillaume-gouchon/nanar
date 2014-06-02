@@ -48,7 +48,10 @@ exports.login = function (req, res, next) {
 exports.getUser = function (req, res, next) {
 	logger.log('debug', 'Get user profile...');
 
-  this.getById(req.params.userId, function (err, user) {
+  User.findOne({ 
+		id: req.params.userId
+	})
+	.exec(function (err, user){
   	if (err) return next(new Errors.Error(err, 'Server error'));
 		if (user == null) return next(new Errors.BadRequest('User not found'));
 
@@ -80,14 +83,6 @@ exports.updateUser = function (req, res, next) {
     });
 	});
 
-};
-
-exports.getById = function (id, callback) {
-	logger.log('debug', 'Get user by id...');
-	User.findOne({ 
-		_id: id
-	})
-	.exec(callback);
 };
 
 exports.getByToken = function (token, callback) {
