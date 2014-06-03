@@ -68,10 +68,9 @@ exports.getVideoByUrl = function (req, res, next) {
 exports.createVideo = function (req, res, next) {
 	logger.log('debug', 'Create Video...');
 
-	var userId = req.authInfo._id;
 	var url = req.body.url;
 	var name = req.body.name;
-	var movieId = req.body.movie_id;
+	var popularity = req.body.popularity;
 	var tags = req.body.tags;
 
   // check video is unique
@@ -84,10 +83,9 @@ exports.createVideo = function (req, res, next) {
 
 		// create new video
 		var video = new Video();
-		video.user_id = userId;
 		video.url = url;
 		video.name = name;
-		video.movie_id = movieId;
+		video.popularity = popularity;
 		video.tags = tags;
 		video.save(function (err, video) {
 			if (err) { return next(new Errors.Error(err, 'Server error')); }

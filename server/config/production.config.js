@@ -5,14 +5,14 @@ module.exports = {
         port : 7000,
 
         logs: {
-            console: 'debug',
+            console: 'warning',
             file: 'debug',
-            fileName: 'node-dev.log'
+            fileName: 'node-prod.log'
         }
     },
 
     db: {
-        name : 'nanar_dev',
+        name : 'nanar_prod',
         host : 'localhost'
     }
 
