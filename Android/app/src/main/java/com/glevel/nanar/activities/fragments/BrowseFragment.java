@@ -17,7 +17,7 @@ public class BrowseFragment extends VideoListFragment {
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case GET_VIDEOS:
-                return new RestLoader<Video>(getActivity().getApplicationContext(), RestHelper.HttpMethod.GET, RestHelper.GET_VIDEOS_URL, null, null);
+                return new RestLoader<Video>(getActivity().getApplicationContext(), RestHelper.HttpMethod.GET, RestHelper.VIDEOS_URL, null, null);
             default:
                 throw new IllegalStateException("Cannot create Loader with id[" + id + "]");
         }

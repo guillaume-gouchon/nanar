@@ -9,6 +9,7 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -166,11 +167,9 @@ public class RestClient extends AsyncTask<Void, Void, String> {
             Log.d(TAG, "Request response code is " + responseCode);
 
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                if (entity != null) {
-                    return convertStreamToString(entity.getContent());
-                } else {
-                    return "OK";
-                }
+                return convertStreamToString(entity.getContent());
+            } else {
+                throw new HttpResponseException(responseCode, "Error during REST request");
             }
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());

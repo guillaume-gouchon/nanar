@@ -12,5 +12,6 @@
     <string name="my_favourites">My favorites</string>
     <string name="tags">Tags</string>
     <string name="viewholder">viewholder</string>
+    <string name="publish_video">Publish video !</string>
 
 </resources>

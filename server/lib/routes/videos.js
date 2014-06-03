@@ -9,7 +9,7 @@ module.exports.init = function (app) {
 
 	app.get('/videos/:videoId', videos.getVideoDetails);
 
-	app.post('/videos', authorization.requiresAuthentication, videos.createVideo);
+	app.post('/videos', videos.createVideo);
 
 	app.get('/videos/url', authorization.requiresAuthentication, videos.getVideoByUrl)
 
