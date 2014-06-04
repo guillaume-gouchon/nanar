@@ -7,15 +7,26 @@
         android:title="@string/search_title"
         android:icon="@drawable/ic_action_search"
         app:showAsAction="collapseActionView|ifRoom"
-        android:actionViewClass="android.widget.SearchView" />
+        app:actionViewClass="android.widget.SearchView" />
     <item
         android:id="@+id/action_about"
-        android:title="@string/action_about"
+        android:title="@string/about_menu_title"
+        android:orderInCategory="60"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_share"
+        android:title="@string/share_menu_title"
         android:orderInCategory="80"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:id="@+id/action_rate_app"
+        android:title="@string/rate_menu_title"
         android:orderInCategory="100"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_contact"
+        android:title="@string/contact_menu_title"
+        android:orderInCategory="120"
         app:showAsAction="never" />
 </menu>

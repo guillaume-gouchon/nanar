@@ -9,7 +9,6 @@ import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
@@ -25,13 +24,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
-public class RestClient extends AsyncTask<Void, Void, String> {
+public class RestClient extends AsyncTask<Void, Void, RestClient.RestResponse> {
 
     private static final String TAG = "RestClient";
 
@@ -59,14 +57,14 @@ public class RestClient extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected void onPostExecute(String json) {
+    protected void onPostExecute(RestResponse json) {
         if (progressDialog != null) {
             progressDialog.dismiss();
         }
     }
 
     @Override
-    protected String doInBackground(Void... voids) {
+    protected RestResponse doInBackground(Void... voids) {
         return doRequest();
     }
 
@@ -75,7 +73,7 @@ public class RestClient extends AsyncTask<Void, Void, String> {
      *
      * @return HTTP response
      */
-    public String doRequest() {
+    public RestResponse doRequest() {
         Log.d(TAG, "Preparing request " + method + " " + uri.toString());
         switch (method) {
             case GET: {
@@ -154,7 +152,7 @@ public class RestClient extends AsyncTask<Void, Void, String> {
         }
     }
 
-    private String executeRequest(HttpUriRequest request) {
+    private RestResponse executeRequest(HttpUriRequest request) {
         Log.d(TAG, "Executing request...");
         HttpClient client = new DefaultHttpClient();
         HttpResponse httpResponse;
@@ -165,16 +163,11 @@ public class RestClient extends AsyncTask<Void, Void, String> {
             HttpEntity entity = httpResponse.getEntity();
 
             Log.d(TAG, "Request response code is " + responseCode);
-
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                return convertStreamToString(entity.getContent());
-            } else {
-                throw new HttpResponseException(responseCode, "Error during REST request");
-            }
+            return new RestResponse(responseCode, convertStreamToString(entity.getContent()));
         } catch (Exception e) {
             Log.e(TAG, e.getMessage());
         }
-        return null;
+        return new RestResponse(500, null);
     }
 
     private static String convertStreamToString(InputStream is) {
@@ -189,6 +182,26 @@ public class RestClient extends AsyncTask<Void, Void, String> {
         } catch (IOException e) {
         }
         return sb.toString();
+    }
+
+    public static class RestResponse {
+
+        private final int responseCode;
+        private final String responseBody;
+
+        private RestResponse(int responseCode, String responseBody) {
+            this.responseCode = responseCode;
+            this.responseBody = responseBody;
+        }
+
+        public String getResponseBody() {
+            return responseBody;
+        }
+
+        public int getResponseCode() {
+            return responseCode;
+        }
+
     }
 
 }

@@ -1,6 +1,7 @@
 package com.glevel.nanar;
 
 import android.app.Application;
+import android.graphics.Typeface;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -24,6 +25,20 @@ public class MyApplication extends Application {
                 .defaultDisplayImageOptions(options)
                 .build();
         ImageLoader.getInstance().init(config);
+
+        // fonts caching
+        loadFonts();
     }
-    
+
+    /**
+     * Loads the required fonts.
+     */
+    private void loadFonts() {
+        FONTS.yard = Typeface.createFromAsset(getAssets(), "fonts/yard_sale.ttf");
+    }
+
+    public static class FONTS {
+        public static Typeface yard;
+    }
+
 }

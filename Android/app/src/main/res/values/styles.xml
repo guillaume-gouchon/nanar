@@ -1,9 +1,6 @@
 <resources>
 
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light">
-        <!-- Customize your theme here. -->
-    </style>
+    <!--Navigation Drawer-->
 
     <style name="NavigationDrawerHeader">
         <item name="android:gravity">center</item>
@@ -19,6 +16,54 @@
         <item name="android:textColor">@color/navigation_drawer_item</item>
         <item name="android:textSize">18sp</item>
         <item name="android:padding">12dp</item>
+        <item name="android:background">@drawable/bg_video_item</item>
     </style>
+
+    <!--Video Item-->
+
+    <style name="VideoItem">
+        <item name="android:padding">10dp</item>
+        <item name="android:background">@drawable/bg_video_item</item>
+    </style>
+
+    <style name="VideoItemTitle">
+        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textColor">#111</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">5dp</item>
+    </style>
+
+    <!--Video Details-->
+
+    <style name="VideoMessage">
+        <item name="android:gravity">center</item>
+        <item name="android:shadowColor">#111</item>
+        <item name="android:shadowDx">8</item>
+        <item name="android:shadowDy">4</item>
+        <item name="android:shadowRadius">3</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- About -->
+    <style name="AboutText">
+        <item name="android:background">#fff</item>
+        <item name="android:textColor">#111</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">10dp</item>
+    </style>
+
+    <!-- Dialogs -->
+    <style name="Dialog" parent="@android:style/Theme.Holo.Dialog.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+        <item name="@android:windowBackground">@android:color/transparent</item>
+    </style>
+
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@anim/fade_in</item>
+        <item name="android:windowExitAnimation">@anim/fade_out</item>
+    </style>
+
 
 </resources>

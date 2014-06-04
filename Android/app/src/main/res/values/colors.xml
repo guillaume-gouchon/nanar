@@ -1,6 +1,11 @@
 <resources>
-    <color name="bg_navigation_drawer">#ddd</color>
+    <color name="bg_activities">#ced6dd</color>
+    <color name="bg_navigation_drawer">#ced6dd</color>
     <color name="navigation_drawer_header">#555</color>
     <color name="navigation_drawer_item">#111</color>
-
+    <color name="bg_video_item">#fff</color>
+    <color name="bg_video_item_pressed">#ced6dd</color>
+    <color name="big_message_green">#5d5</color>
+    <color name="big_message_red">#f33</color>
+    <color name="launcher_blue">#23a9ea</color>
 </resources>

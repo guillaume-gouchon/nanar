@@ -8,6 +8,7 @@ import com.glevel.nanar.models.RestResource;
 
 import org.apache.http.NameValuePair;
 
+import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
@@ -22,20 +23,30 @@ public class RestLoader<T extends RestResource> extends AsyncTaskLoader<Cursor> 
     private final String uri;
     private final ArrayList<NameValuePair> headers;
     private final ArrayList<NameValuePair> params;
+    private final Class<T> resourceClass;
 
-    public RestLoader(Context context, RestHelper.HttpMethod method, String uri, ArrayList<NameValuePair> headers, ArrayList<NameValuePair> params) {
+    public RestLoader(Class<T> resourceClass, Context context, RestHelper.HttpMethod method, String uri, ArrayList<NameValuePair> headers, ArrayList<NameValuePair> params) {
         super(context);
         this.method = method;
         this.uri = uri;
         this.headers = headers;
         this.params = params;
+        this.resourceClass = resourceClass;
     }
 
     @Override
     public Cursor loadInBackground() {
         try {
-            String response = new RestClient(method, uri, headers, params, null).doRequest();
-            return T.responseToCursor(response);
+            RestClient.RestResponse response = new RestClient(method, uri, headers, params, null).doRequest();
+            if (response.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                try {
+                    return resourceClass.newInstance().responseToCursor(response.getResponseBody());
+                } catch (InstantiationException e) {
+                    e.printStackTrace();
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }

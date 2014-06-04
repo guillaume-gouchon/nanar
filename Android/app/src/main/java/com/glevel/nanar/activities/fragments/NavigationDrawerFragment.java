@@ -34,6 +34,8 @@ import java.util.List;
  */
 public class NavigationDrawerFragment extends Fragment {
 
+    private static final String TAG = "NavigationDrawerfragment";
+
     /**
      * Remember the position of the selected item.
      */
@@ -67,9 +69,8 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(false);
 
-        // Read in the flag indicating whether or not the user has demonstrated awareness of the
-        // drawer. See PREF_USER_LEARNED_DRAWER for details.
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getActivity());
         mUserLearnedDrawer = sp.getBoolean(PREF_USER_LEARNED_DRAWER, false);
 
@@ -78,7 +79,6 @@ public class NavigationDrawerFragment extends Fragment {
             mFromSavedInstanceState = true;
         }
 
-        // Select either the default item (0) or the last selected item.
         selectItem(mCurrentSelectedPosition);
     }
 
@@ -100,9 +100,6 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-
-        mNavItems.add(new NavDrawerItem(R.drawable.ic_action_view_as_grid, R.string.browse_videos, new BrowseFragment()));
-        mNavItems.add(new NavDrawerItem(R.drawable.ic_action_favorite, R.string.my_favourites, new FavoritesFragment()));
 
         mDrawerListView.setAdapter(new NavigationAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mNavItems));
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
@@ -126,6 +123,8 @@ public class NavigationDrawerFragment extends Fragment {
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         // set up the drawer's list view with items and click listener
+        mNavItems.add(new NavDrawerItem(R.drawable.ic_action_view_as_grid, R.string.browse_videos, new BrowseFragment()));
+        mNavItems.add(new NavDrawerItem(R.drawable.ic_action_star, R.string.my_favourites, new FavoritesFragment()));
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -256,7 +255,6 @@ public class NavigationDrawerFragment extends Fragment {
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
-        actionBar.setTitle(R.string.app_name);
     }
 
     private ActionBar getActionBar() {

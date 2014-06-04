@@ -1,25 +1,32 @@
 package com.glevel.nanar.activities.fragments;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.os.Bundle;
+import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.glevel.nanar.R;
+import com.glevel.nanar.activities.VideoDetailsActivity;
 import com.glevel.nanar.activities.adapters.VideoAdapter;
+import com.glevel.nanar.models.Video;
 
 /**
  * Created by guillaume on 5/27/14.
  */
-public abstract class VideoListFragment extends android.support.v4.app.ListFragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public abstract class VideoListFragment extends ListFragment implements LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener {
 
     protected static final int GET_VIDEOS = 1;
 
     private VideoAdapter mVideoAdapter;
+    protected SwipeRefreshLayout mSwipeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,8 +36,25 @@ public abstract class VideoListFragment extends android.support.v4.app.ListFragm
         mVideoAdapter = new VideoAdapter(getActivity().getApplicationContext(), R.layout.video_list_item);
         setListAdapter(mVideoAdapter);
 
+        // implements pull to refresh
+        mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
+        mSwipeLayout.setColorScheme(R.color.launcher_blue, R.color.big_message_green, R.color.big_message_green, R.color.big_message_green);
+        mSwipeLayout.setOnRefreshListener(this);
+
         getLoaderManager().initLoader(GET_VIDEOS, null, this).forceLoad();
+
         return rootView;
+    }
+
+    @Override
+    public void onListItemClick(ListView listView, View view, int position, long id) {
+        super.onListItemClick(listView, view, position, id);
+        Video video = mVideoAdapter.getVideo(position);
+        Bundle extras = new Bundle();
+        extras.putParcelable(VideoDetailsActivity.EXTRAS_VIDEO, video);
+        Intent intent = new Intent(getActivity(), VideoDetailsActivity.class);
+        intent.putExtras(extras);
+        startActivity(intent);
     }
 
     @Override
@@ -38,6 +62,9 @@ public abstract class VideoListFragment extends android.support.v4.app.ListFragm
         if (mVideoAdapter != null && cursor != null) {
             DatabaseUtils.dumpCursor(cursor);
             mVideoAdapter.swapCursor(cursor);
+            if (mSwipeLayout.isRefreshing()) {
+                mSwipeLayout.setRefreshing(false);
+            }
         }
     }
 
@@ -46,6 +73,11 @@ public abstract class VideoListFragment extends android.support.v4.app.ListFragm
         if (mVideoAdapter != null) {
             mVideoAdapter.swapCursor(null);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        getLoaderManager().restartLoader(GET_VIDEOS, null, this).forceLoad();
     }
 
 }

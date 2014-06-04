@@ -5,10 +5,8 @@ import android.database.Cursor;
 /**
  * Created by guillaume on 6/2/14.
  */
-public abstract class RestResource {
+public interface RestResource {
 
-    public static Cursor responseToCursor(String response) {
-        return null;
-    }
+    public Cursor responseToCursor(String response);
 
 }

@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import com.glevel.nanar.models.Favorite;
 import com.glevel.nanar.models.Tag;
 
 
@@ -18,20 +19,23 @@ public class ContentProvider extends android.content.ContentProvider {
 
     private DatabaseHelper dbHelper;
 
-
     private static final String AUTHORITY = "com.glevel.nanar";
     private static final String CONTENT_URI = "content://" + AUTHORITY + "/";
 
     private static final int TYPE_TAGS = 10;
-    public static final Uri URI_TAGS = Uri.parse(CONTENT_URI + "tags");
     private static final int TYPE_VIDEOS = 20;
+    private static final int TYPE_FAVORITES = 30;
+
+    public static final Uri URI_TAGS = Uri.parse(CONTENT_URI + "tags");
     public static final Uri URI_VIDEOS = Uri.parse(CONTENT_URI + "videos");
+    public static final Uri URI_FAVORITES = Uri.parse(CONTENT_URI + "favorites");
 
     private static final UriMatcher sURIMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
     static {
         sURIMatcher.addURI(AUTHORITY, "tags", TYPE_TAGS);
         sURIMatcher.addURI(AUTHORITY, "videos", TYPE_VIDEOS);
+        sURIMatcher.addURI(AUTHORITY, "favorites", TYPE_FAVORITES);
     }
 
     @Override
@@ -47,6 +51,9 @@ public class ContentProvider extends android.content.ContentProvider {
         switch (uriType) {
             case TYPE_TAGS:
                 queryBuilder.setTables(Tag.TABLE_NAME);
+                break;
+            case TYPE_FAVORITES:
+                queryBuilder.setTables(Favorite.TABLE_NAME);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -68,10 +75,15 @@ public class ContentProvider extends android.content.ContentProvider {
         SQLiteDatabase sqlDB = dbHelper.getWritableDatabase();
         Uri insertedId = null;
         int uriType = sURIMatcher.match(uri);
+        long id;
         switch (uriType) {
             case TYPE_TAGS:
-                long id = sqlDB.insert(Tag.TABLE_NAME, null, values);
+                id = sqlDB.insert(Tag.TABLE_NAME, null, values);
                 insertedId = ContentUris.withAppendedId(URI_TAGS, id);
+                break;
+            case TYPE_FAVORITES:
+                id = sqlDB.insert(Favorite.TABLE_NAME, null, values);
+                insertedId = ContentUris.withAppendedId(URI_FAVORITES, id);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);
@@ -88,6 +100,9 @@ public class ContentProvider extends android.content.ContentProvider {
         switch (uriType) {
             case TYPE_TAGS:
                 rowsDeleted = sqlDB.delete(Tag.TABLE_NAME, selection, selectionArgs);
+                break;
+            case TYPE_FAVORITES:
+                rowsDeleted = sqlDB.delete(Favorite.TABLE_NAME, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);

@@ -6,9 +6,12 @@ import android.support.v4.widget.CursorAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.glevel.nanar.MyApplication;
 import com.glevel.nanar.R;
 import com.glevel.nanar.models.Video;
 import com.glevel.nanar.utils.YoutubeHelper;
@@ -21,11 +24,13 @@ public class VideoAdapter extends CursorAdapter {
 
     private final LayoutInflater mInflater;
     private final ImageLoader mImageLoader;
+    private final Animation inAnimation;
 
     public VideoAdapter(Context context, int flags) {
         super(context, null, flags);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageLoader = ImageLoader.getInstance();
+        inAnimation = AnimationUtils.loadAnimation(context, R.anim.video_in_animation);
     }
 
     @Override
@@ -46,12 +51,21 @@ public class VideoAdapter extends CursorAdapter {
             viewHolder.title = (TextView) view.findViewById(R.id.title);
             viewHolder.thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             view.setTag(R.string.viewholder, viewHolder);
+            view.setAnimation(inAnimation);
         } else {
             viewHolder = (ViewHolder) view.getTag(R.string.viewholder);
         }
 
         viewHolder.title.setText(cursor.getString(Video.CURSOR_TITLE));
-        mImageLoader.displayImage(YoutubeHelper.getVideoThumbnail(cursor.getString(Video.CURSOR_ID)), viewHolder.thumbnail);
+        mImageLoader.displayImage(YoutubeHelper.getVideoThumbnail(cursor.getString(Video.CURSOR_VIDEO_ID)), viewHolder.thumbnail);
+    }
+
+    public Video getVideo(int position) {
+        Cursor cursor = getCursor();
+        if (cursor.moveToPosition(position)) {
+            return new Video(cursor.getString(Video.CURSOR_VIDEO_ID), cursor.getString(Video.CURSOR_TITLE));
+        }
+        throw new ArrayIndexOutOfBoundsException();
     }
 
 }
