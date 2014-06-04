@@ -1,32 +1,29 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:yourapp="http://schemas.android.com/apk/res-auto"
     tools:context="com.glevel.nanar.activities.MainActivity">
     <item
         android:id="@+id/search"
-        android:title="@string/search_title"
+        android:actionViewClass="android.widget.SearchView"
         android:icon="@drawable/ic_action_search"
-        app:showAsAction="collapseActionView|ifRoom"
-        app:actionViewClass="android.widget.SearchView" />
+        android:showAsAction="collapseActionView|ifRoom"
+        android:title="@string/search_title"
+        yourapp:actionViewClass="android.widget.SearchView"
+        yourapp:showAsAction="collapseActionView|ifRoom" />
     <item
         android:id="@+id/action_about"
-        android:title="@string/about_menu_title"
         android:orderInCategory="60"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/action_share"
-        android:title="@string/share_menu_title"
-        android:orderInCategory="80"
-        app:showAsAction="never" />
+        android:showAsAction="never"
+        android:title="@string/about_menu_title" />
     <item
         android:id="@+id/action_rate_app"
-        android:title="@string/rate_menu_title"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
-
+        android:orderInCategory="70"
+        android:showAsAction="never"
+        android:title="@string/rate_menu_title" />
     <item
-        android:id="@+id/action_contact"
-        android:title="@string/contact_menu_title"
-        android:orderInCategory="120"
-        app:showAsAction="never" />
+        android:id="@+id/action_share"
+        android:orderInCategory="80"
+        android:showAsAction="never"
+        android:title="@string/share_menu_title" />
+
 </menu>

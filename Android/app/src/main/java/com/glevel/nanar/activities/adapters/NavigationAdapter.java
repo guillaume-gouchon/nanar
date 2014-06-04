@@ -8,32 +8,46 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.glevel.nanar.R;
-import com.glevel.nanar.models.NavDrawerItem;
+import com.glevel.nanar.models.navigation.Item;
+import com.glevel.nanar.models.navigation.NavDrawerHeader;
+import com.glevel.nanar.models.navigation.NavDrawerItem;
 
 import java.util.List;
 
 /**
  * Created by guillaume on 5/28/14.
  */
-public class NavigationAdapter extends ArrayAdapter<NavDrawerItem> {
+public class NavigationAdapter extends ArrayAdapter<Item> {
 
-    public NavigationAdapter(Context context, int resource, List<NavDrawerItem> objects) {
+    public NavigationAdapter(Context context, int resource, List<Item> objects) {
         super(context, resource, objects);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NavDrawerItem item = getItem(position);
+        Item item = getItem(position);
 
         View v = convertView;
         if (v == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            v = inflater.inflate(R.layout.navigation_drawer_item, null);
+
+            if (item.isHeader()) {
+                v = inflater.inflate(R.layout.navigation_drawer_header_item, null);
+                v.setOnClickListener(null);
+                v.setOnLongClickListener(null);
+                v.setLongClickable(false);
+            } else {
+                v = inflater.inflate(R.layout.navigation_drawer_item, null);
+            }
+
+
         }
 
-        TextView tv = (TextView) v.findViewById(android.R.id.text1);
-        tv.setCompoundDrawablesWithIntrinsicBounds(item.getIcon(), 0, 0, 0);
+        TextView tv = (TextView) v.findViewById(R.id.label);
         tv.setText(item.getTextResource());
+        if (!item.isHeader()) {
+            tv.setCompoundDrawablesWithIntrinsicBounds(((NavDrawerItem) item).getIcon(), 0, 0, 0);
+        }
 
         return v;
     }

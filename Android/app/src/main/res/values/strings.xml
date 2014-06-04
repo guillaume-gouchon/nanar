@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
     <string name="app_name">Nanar</string>
     <string name="placeholder">placeholder</string>
     <string name="viewholder">viewholder</string>
@@ -10,7 +9,7 @@
     <string name="add_to_favorites">Add to favorites</string>
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="message_add_to_favorites">Good choice !</string>
-    <string name="message_remove_to_favorites">It is not my favorite anymore !</string>
+    <string name="message_remove_to_favorites">Don\'t like it anymore ?</string>
     <string name="share_video_subject">Check out this video I have found on %s !</string>
 
 
@@ -30,7 +29,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="browse_videos">Browse videos</string>
     <string name="my_favourites">My favorites</string>
-    <string name="tags">Tags</string>
+    <string name="tags">Popular Tags</string>
 
     <!-- Contact -->
     <string name="contact_menu_title">Contact</string>
@@ -51,7 +50,7 @@
     <string name="about_menu_title">About</string>
     <string name="about_title">About Nanar</string>
     <string name="about_credits">Developed by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nThis app is dedicated to all the bad movies fans around the world, who enjoy spending nights watching Chuck (Norris), Christophe (Lambert), Steven (Seagal), Richard (Harrison), etc...</string>
-    <string name="about_blog">All the content and videos are retrieved from Youtube.\n\nYou can add new videos by using Share functionality on the Youtube application !</string>
+    <string name="about_blog">All the videos are retrieved from Youtube.\n\nYou can add new videos by using Share functionality on the Youtube application !</string>
     <string name="about_version">Version : 1.0.0</string>
 
     <!-- Share app -->

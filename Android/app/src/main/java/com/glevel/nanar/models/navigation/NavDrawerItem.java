@@ -1,14 +1,14 @@
-package com.glevel.nanar.models;
+package com.glevel.nanar.models.navigation;
 
-import android.support.v4.app.Fragment;
+
+import android.app.Fragment;
 
 /**
  * Created by guillaume on 5/28/14.
  */
-public class NavDrawerItem {
+public class NavDrawerItem extends Item {
 
     private final int icon;
-    private final int textResource;
     private final Fragment targetFragment;
 
     public NavDrawerItem(int icon, int text, Fragment targetFragment) {
@@ -21,11 +21,13 @@ public class NavDrawerItem {
         return icon;
     }
 
-    public int getTextResource() {
-        return textResource;
-    }
-
     public Fragment getTargetFragment() {
         return targetFragment;
     }
+
+    @Override
+    public boolean isHeader() {
+        return false;
+    }
+
 }

@@ -1,12 +1,12 @@
 package com.glevel.nanar.activities.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -22,7 +22,9 @@ import android.widget.ListView;
 
 import com.glevel.nanar.R;
 import com.glevel.nanar.activities.adapters.NavigationAdapter;
-import com.glevel.nanar.models.NavDrawerItem;
+import com.glevel.nanar.models.navigation.Item;
+import com.glevel.nanar.models.navigation.NavDrawerHeader;
+import com.glevel.nanar.models.navigation.NavDrawerItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +66,7 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    private List<NavDrawerItem> mNavItems = new ArrayList<NavDrawerItem>();
+    private List<Item> mNavItems = new ArrayList<Item>();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -122,16 +124,16 @@ public class NavigationDrawerFragment extends Fragment {
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+
         // set up the drawer's list view with items and click listener
         mNavItems.add(new NavDrawerItem(R.drawable.ic_action_view_as_grid, R.string.browse_videos, new BrowseFragment()));
         mNavItems.add(new NavDrawerItem(R.drawable.ic_action_star, R.string.my_favourites, new FavoritesFragment()));
+        mNavItems.add(new NavDrawerHeader(R.string.tags));
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeButtonEnabled(true);
 
-        // ActionBarDrawerToggle ties together the the proper interactions
-        // between the navigation drawer and the action bar app icon.
         mDrawerToggle = new ActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
@@ -146,7 +148,7 @@ public class NavigationDrawerFragment extends Fragment {
                     return;
                 }
 
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
 
             @Override
@@ -165,7 +167,7 @@ public class NavigationDrawerFragment extends Fragment {
                     sp.edit().putBoolean(PREF_USER_LEARNED_DRAWER, true).commit();
                 }
 
-                getActivity().supportInvalidateOptionsMenu(); // calls onPrepareOptionsMenu()
+                getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
             }
         };
 
@@ -271,7 +273,7 @@ public class NavigationDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(int position);
     }
 
-    public List<NavDrawerItem> getNavItems() {
+    public List<Item> getNavItems() {
         return mNavItems;
     }
 

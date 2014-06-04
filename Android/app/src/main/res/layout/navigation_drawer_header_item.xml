@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@android:id/text1"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    style="@style/NavigationDrawerHeader" />
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/label"
+        style="@style/NavigationDrawerHeader"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>
