@@ -1,4 +1,4 @@
 Nanar
 ==========
 
-Watch and rewatch best punchlines of your favorites bad movies !
+Watch and re-watch the best punchlines of your favorites bad movies !
