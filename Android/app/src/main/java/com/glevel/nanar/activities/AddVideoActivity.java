@@ -14,8 +14,8 @@ import android.widget.TextView;
 
 import com.glevel.nanar.MyApplication;
 import com.glevel.nanar.R;
+import com.glevel.nanar.models.Video;
 import com.glevel.nanar.providers.rest.RestClient;
-import com.glevel.nanar.providers.rest.RestHelper;
 import com.glevel.nanar.utils.YoutubeHelper;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -114,7 +114,7 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
         params.add(new BasicNameValuePair("url", mVideoId));
 
         try {
-            new RestClient(RestHelper.HttpMethod.POST, RestHelper.VIDEOS_URL, null, params, new ProgressDialog(this)) {
+            new RestClient(RestClient.HttpMethod.POST, Video.RESOURCE_URL, null, params, new ProgressDialog(this)) {
                 @Override
                 protected void onPostExecute(RestResponse response) {
                     super.onPostExecute(response);

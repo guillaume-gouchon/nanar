@@ -4,7 +4,6 @@
     android:id="@+id/rootLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@android:color/black"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -25,21 +24,21 @@
         <Button
             android:id="@+id/cancelButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rate_dont_want" />
 
         <Button
             android:id="@+id/neutralButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rate_later" />
 
         <Button
             android:id="@+id/okButton"
             android:layout_width="0dp"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/rate_now" />
     </LinearLayout>

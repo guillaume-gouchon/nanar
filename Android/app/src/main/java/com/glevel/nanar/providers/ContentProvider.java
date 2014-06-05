@@ -10,6 +10,7 @@ import android.net.Uri;
 
 import com.glevel.nanar.models.Favorite;
 import com.glevel.nanar.models.Tag;
+import com.glevel.nanar.models.Video;
 
 
 /**
@@ -17,10 +18,10 @@ import com.glevel.nanar.models.Tag;
  */
 public class ContentProvider extends android.content.ContentProvider {
 
-    private DatabaseHelper dbHelper;
-
-    private static final String AUTHORITY = "com.glevel.nanar";
+    public static final String AUTHORITY = "com.glevel.nanar";
     private static final String CONTENT_URI = "content://" + AUTHORITY + "/";
+
+    private DatabaseHelper dbHelper;
 
     private static final int TYPE_TAGS = 10;
     private static final int TYPE_VIDEOS = 20;
@@ -52,6 +53,9 @@ public class ContentProvider extends android.content.ContentProvider {
             case TYPE_TAGS:
                 queryBuilder.setTables(Tag.TABLE_NAME);
                 break;
+            case TYPE_VIDEOS:
+                queryBuilder.setTables(Video.TABLE_NAME);
+                break;
             case TYPE_FAVORITES:
                 queryBuilder.setTables(Favorite.TABLE_NAME);
                 break;
@@ -81,6 +85,10 @@ public class ContentProvider extends android.content.ContentProvider {
                 id = sqlDB.insert(Tag.TABLE_NAME, null, values);
                 insertedId = ContentUris.withAppendedId(URI_TAGS, id);
                 break;
+            case TYPE_VIDEOS:
+                id = sqlDB.insert(Video.TABLE_NAME, null, values);
+                insertedId = ContentUris.withAppendedId(URI_VIDEOS, id);
+                break;
             case TYPE_FAVORITES:
                 id = sqlDB.insert(Favorite.TABLE_NAME, null, values);
                 insertedId = ContentUris.withAppendedId(URI_FAVORITES, id);
@@ -101,6 +109,9 @@ public class ContentProvider extends android.content.ContentProvider {
             case TYPE_TAGS:
                 rowsDeleted = sqlDB.delete(Tag.TABLE_NAME, selection, selectionArgs);
                 break;
+            case TYPE_VIDEOS:
+                rowsDeleted = sqlDB.delete(Video.TABLE_NAME, selection, selectionArgs);
+                break;
             case TYPE_FAVORITES:
                 rowsDeleted = sqlDB.delete(Favorite.TABLE_NAME, selection, selectionArgs);
                 break;
@@ -120,6 +131,9 @@ public class ContentProvider extends android.content.ContentProvider {
         switch (uriType) {
             case TYPE_TAGS:
                 rowsUpdated = sqlDB.update(Tag.TABLE_NAME, values, selection, selectionArgs);
+                break;
+            case TYPE_VIDEOS:
+                rowsUpdated = sqlDB.update(Video.TABLE_NAME, values, selection, selectionArgs);
                 break;
             default:
                 throw new IllegalArgumentException("Unknown URI: " + uri);

@@ -1,5 +1,6 @@
 package com.glevel.nanar.activities.fragments;
 
+import android.content.CursorLoader;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -8,9 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.glevel.nanar.R;
-import com.glevel.nanar.models.Video;
-import com.glevel.nanar.providers.rest.RestHelper;
-import com.glevel.nanar.providers.rest.RestLoader;
+import com.glevel.nanar.providers.ContentProvider;
 
 /**
  * Created by guillaume on 6/2/14.
@@ -28,7 +27,7 @@ public class BrowseFragment extends VideoListFragment {
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case GET_VIDEOS:
-                return new RestLoader(Video.class, getActivity().getApplicationContext(), RestHelper.HttpMethod.GET, RestHelper.VIDEOS_URL, null, null);
+                return new CursorLoader(getActivity().getApplicationContext(), ContentProvider.URI_VIDEOS, null, null, null, null);
             default:
                 throw new IllegalStateException("Cannot create Loader with id[" + id + "]");
         }

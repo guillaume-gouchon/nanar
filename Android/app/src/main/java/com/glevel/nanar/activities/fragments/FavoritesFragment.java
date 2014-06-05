@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.glevel.nanar.R;
+import com.glevel.nanar.models.Video;
 import com.glevel.nanar.providers.ContentProvider;
 
 /**
@@ -20,14 +21,19 @@ public class FavoritesFragment extends VideoListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         getActivity().getActionBar().setTitle(R.string.my_favourites);
 
-        return super.onCreateView(inflater, container, savedInstanceState);
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        return rootView;
+    }
+
+    protected int getEmptyViewMessage() {
+        return R.string.no_video;
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case GET_VIDEOS:
-                return new CursorLoader(getActivity().getApplicationContext(), ContentProvider.URI_FAVORITES, null, null, null, null);
+                return new CursorLoader(getActivity().getApplicationContext(), ContentProvider.URI_FAVORITES, null, null, null, Video.COL_CREATED_DATE + " DESC");
             default:
                 throw new IllegalStateException("Cannot create Loader with id[" + id + "]");
         }

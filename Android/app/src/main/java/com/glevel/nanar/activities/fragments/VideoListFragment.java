@@ -1,5 +1,6 @@
 package com.glevel.nanar.activities.fragments;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.app.LoaderManager;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import com.glevel.nanar.R;
 import com.glevel.nanar.activities.VideoDetailsActivity;
 import com.glevel.nanar.activities.adapters.VideoAdapter;
 import com.glevel.nanar.models.Video;
+import com.glevel.nanar.providers.sync.SyncUtils;
 
 /**
  * Created by guillaume on 5/27/14.
@@ -26,19 +28,19 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
     protected static final int GET_VIDEOS = 1;
 
     private VideoAdapter mVideoAdapter;
-    protected SwipeRefreshLayout mSwipeLayout;
+    private SwipeRefreshLayout mSwipeLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_browse_videos, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_videos_list, container, false);
 
         mVideoAdapter = new VideoAdapter(getActivity().getApplicationContext(), R.layout.video_list_item);
         setListAdapter(mVideoAdapter);
 
         // implements pull to refresh
         mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
-        mSwipeLayout.setColorScheme(R.color.launcher_blue, R.color.big_message_green, R.color.big_message_green, R.color.big_message_green);
+        mSwipeLayout.setColorScheme(R.color.action_bar_blue, R.color.launcher_yellow, R.color.launcher_yellow, R.color.launcher_yellow);
         mSwipeLayout.setOnRefreshListener(this);
 
         getLoaderManager().initLoader(GET_VIDEOS, null, this).forceLoad();
@@ -77,7 +79,14 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
 
     @Override
     public void onRefresh() {
+        SyncUtils.TriggerRefresh();
         getLoaderManager().restartLoader(GET_VIDEOS, null, this).forceLoad();
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        SyncUtils.CreateSyncAccount(activity);
     }
 
 }

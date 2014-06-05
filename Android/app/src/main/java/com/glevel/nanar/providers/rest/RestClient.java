@@ -33,13 +33,22 @@ public class RestClient extends AsyncTask<Void, Void, RestClient.RestResponse> {
 
     private static final String TAG = "RestClient";
 
-    private RestHelper.HttpMethod method;
+    public static final String SERVER_BASE_URL = "http://warnode.com:7000";
+
+    public enum HttpMethod {
+        GET,
+        POST,
+        PUT,
+        DELETE
+    }
+
+    private HttpMethod method;
     private URI uri;
     private ArrayList<NameValuePair> headers;
     private ArrayList<NameValuePair> params;
     private ProgressDialog progressDialog;
 
-    public RestClient(RestHelper.HttpMethod method, String url, ArrayList<NameValuePair> headers, ArrayList<NameValuePair> params, ProgressDialog progressDialog) throws URISyntaxException {
+    public RestClient(HttpMethod method, String url, ArrayList<NameValuePair> headers, ArrayList<NameValuePair> params, ProgressDialog progressDialog) throws URISyntaxException {
         super();
         this.method = method;
         this.uri = new URI(url);
@@ -170,7 +179,7 @@ public class RestClient extends AsyncTask<Void, Void, RestClient.RestResponse> {
         return new RestResponse(500, null);
     }
 
-    private static String convertStreamToString(InputStream is) {
+    public static String convertStreamToString(InputStream is) {
         BufferedReader reader = new BufferedReader(new InputStreamReader(is));
         StringBuilder sb = new StringBuilder();
         String line = null;

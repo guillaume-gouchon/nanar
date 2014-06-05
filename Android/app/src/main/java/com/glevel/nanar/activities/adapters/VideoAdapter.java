@@ -11,7 +11,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.glevel.nanar.MyApplication;
 import com.glevel.nanar.R;
 import com.glevel.nanar.models.Video;
 import com.glevel.nanar.utils.YoutubeHelper;
@@ -56,14 +55,16 @@ public class VideoAdapter extends CursorAdapter {
             viewHolder = (ViewHolder) view.getTag(R.string.viewholder);
         }
 
-        viewHolder.title.setText(cursor.getString(Video.CURSOR_TITLE));
-        mImageLoader.displayImage(YoutubeHelper.getVideoThumbnail(cursor.getString(Video.CURSOR_VIDEO_ID)), viewHolder.thumbnail);
+        Video video = Video.fromCursor(cursor);
+
+        viewHolder.title.setText(video.getTitle());
+        mImageLoader.displayImage(YoutubeHelper.getVideoThumbnail(video.getVideoId()), viewHolder.thumbnail);
     }
 
     public Video getVideo(int position) {
         Cursor cursor = getCursor();
         if (cursor.moveToPosition(position)) {
-            return new Video(cursor.getString(Video.CURSOR_VIDEO_ID), cursor.getString(Video.CURSOR_TITLE));
+            return Video.fromCursor(cursor);
         }
         throw new ArrayIndexOutOfBoundsException();
     }

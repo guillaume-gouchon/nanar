@@ -120,7 +120,7 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
 
     private void favoriteVideo() {
         Log.d(TAG, "Adding video to favorite...");
-        getContentResolver().insert(ContentProvider.URI_FAVORITES, Favorite.toContentValues(mVideo));
+        getContentResolver().insert(ContentProvider.URI_FAVORITES, mVideo.toContentValues());
         mIsFavorite = true;
         showMessage(R.string.message_add_to_favorites, R.color.big_message_green);
         invalidateOptionsMenu();

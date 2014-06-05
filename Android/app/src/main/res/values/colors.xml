@@ -2,11 +2,13 @@
     <color name="bg_activities">#ced6dd</color>
     <color name="bg_navigation_drawer">#fff</color>
     <color name="navigation_drawer_divider">#ced6dd</color>
-    <color name="navigation_drawer_header_text_color">#444</color>
+    <color name="navigation_drawer_header_text_color">#23a9ea</color>
     <color name="navigation_drawer_item_text_color">#111</color>
     <color name="bg_video_item">#fff</color>
-    <color name="bg_video_item_pressed">#ced6dd</color>
+    <color name="bg_video_item_pressed">#dfe7ee</color>
     <color name="big_message_green">#5d5</color>
     <color name="big_message_red">#f33</color>
-    <color name="launcher_blue">#23a9ea</color>
+    <color name="action_bar_blue">#23a9ea</color>
+    <color name="search_hint_text_color">#eee</color>
+    <color name="launcher_yellow">#dcca00</color>
 </resources>
