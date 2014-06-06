@@ -27,9 +27,9 @@ exports.getVideos = function (req, res, next) {
 	}
 
 	Video.find(query)
-	.sort({ nb_liked: -1, date_created: -1 })
-	.skip(pagination * (page - 1))
-	.limit(pagination)
+	.sort({ popularity: -1, date_created: -1 })
+	// .skip(pagination * (page - 1))
+	// .limit(pagination)
 	.exec(function (err, videos) {
 		if (err) { return next(new Errors.Error(err, 'Server error')); }
 

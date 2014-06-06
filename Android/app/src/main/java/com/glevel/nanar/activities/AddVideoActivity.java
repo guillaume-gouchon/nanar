@@ -85,7 +85,6 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
         }
 
         updateVideoDetails();
-
     }
 
     private void setupUI() {
@@ -227,6 +226,8 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
         }
 
         if (hideLayout) {
+            mTagInput.setVisibility(View.GONE);
+            mTagsLayout.setVisibility(View.GONE);
             mVideoView.setVisibility(View.GONE);
         }
 
