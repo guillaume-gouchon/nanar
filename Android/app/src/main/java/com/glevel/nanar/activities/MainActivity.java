@@ -18,7 +18,7 @@ import android.widget.SearchView;
 import com.glevel.nanar.R;
 import com.glevel.nanar.activities.fragments.BrowseFragment;
 import com.glevel.nanar.activities.fragments.NavigationDrawerFragment;
-import com.glevel.nanar.models.navigation.NavDrawerItem;
+import com.glevel.nanar.models.navigation.NavDrawerLink;
 import com.glevel.nanar.utils.ApplicationUtils;
 
 
@@ -50,7 +50,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         if (position == 0) {
             targetFragment = new BrowseFragment();
         } else {
-            NavDrawerItem itemSelected = (NavDrawerItem) mNavigationDrawerFragment.getNavItems().get(position);
+            NavDrawerLink itemSelected = (NavDrawerLink) mNavigationDrawerFragment.getNavItems().get(position);
             targetFragment = itemSelected.getTargetFragment();
         }
 

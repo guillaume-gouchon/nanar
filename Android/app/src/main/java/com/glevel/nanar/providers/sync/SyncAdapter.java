@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.os.RemoteException;
 import android.util.Log;
 
+import com.glevel.nanar.models.SyncResource;
+import com.glevel.nanar.models.Tag;
 import com.glevel.nanar.models.Video;
 import com.glevel.nanar.providers.ContentProvider;
 import com.glevel.nanar.providers.rest.RestClient;
@@ -22,6 +24,8 @@ import org.json.JSONException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -92,16 +96,36 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
         Log.i(TAG, "Beginning network synchronization");
+
+        int resourceId = extras.getInt(SyncUtils.EXTRA_RESOURCE_ID);
+
+        switch (resourceId) {
+            case Video.RESOURCE_ID:
+                performSyncForResource(syncResult, Video.RESOURCE_URL, ContentProvider.URI_VIDEOS, Video.class);
+                break;
+            case Tag.RESOURCE_ID:
+                performSyncForResource(syncResult, Tag.RESOURCE_URL, ContentProvider.URI_TAGS, Tag.class);
+                break;
+            default:
+                throw new IllegalArgumentException("Incorrect Resource Id");
+        }
+    }
+
+    private void performSyncForResource(SyncResult syncResult, String resourceUrl, Uri resourceUri, Class<? extends SyncResource> resourceClass) {
         try {
-            final URL location = new URL(Video.RESOURCE_URL);
+            final URL location = new URL(resourceUrl);
             InputStream stream = null;
 
             try {
                 Log.i(TAG, "Streaming data from network: " + location);
                 stream = downloadUrl(location);
-                updateLocalData(stream, syncResult);
-                // Makes sure that the InputStream is closed after the app is
-                // finished using it.
+                updateLocalData(stream, syncResult, resourceUri, resourceClass);
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
             } finally {
                 if (stream != null) {
                     stream.close();
@@ -155,28 +179,30 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
      * (At this point, incoming database only contains missing items.)<br/>
      * 3. For any items remaining in incoming list, ADD to database.
      */
-    public void updateLocalData(final InputStream stream, final SyncResult syncResult)
-            throws IOException, JSONException, RemoteException,
-            OperationApplicationException, ParseException {
+    public void updateLocalData(final InputStream stream, final SyncResult syncResult, Uri resourceUri, Class<? extends SyncResource> resourceClass)
+            throws IOException, JSONException, RemoteException, OperationApplicationException, ParseException,
+            NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+
         final ContentResolver contentResolver = getContext().getContentResolver();
 
         String response = RestClient.convertStreamToString(stream);
-        HashMap<String, Video> entryMap = Video.responseToVideoMap(response);
+        Method responseToMapMethod = resourceClass.getMethod("responseToMap", String.class);
+        HashMap<String, SyncResource> entryMap = (HashMap<String, SyncResource>) responseToMapMethod.invoke(null, response);
         Log.i(TAG, "Parsing complete. Found " + entryMap.size() + " entries");
 
         ArrayList<ContentProviderOperation> batch = new ArrayList<ContentProviderOperation>();
 
         // Get list of all items
         Log.i(TAG, "Fetching local entries for merge");
-        Uri uri = ContentProvider.URI_VIDEOS; // Get all entries
-        Cursor c = contentResolver.query(uri, null, null, null, null);
+        Cursor c = contentResolver.query(resourceUri, null, null, null, null);
         assert c != null;
         Log.i(TAG, "Found " + c.getCount() + " local entries. Computing merge solution...");
 
+        Method fromCursorMethod = resourceClass.getMethod("fromCursor", Cursor.class);
         while (c.moveToNext()) {
-            Video localVideo = Video.fromCursor(c);
-            String remoteId = localVideo.getRemoteId();
-            Video match = entryMap.get(remoteId);
+            SyncResource localResource = (SyncResource) fromCursorMethod.invoke(null, c);
+            String remoteId = localResource.getRemoteId();
+            SyncResource match = entryMap.get(remoteId);
 
             if (match != null) {
                 // Entry exists. Remove from entry map to prevent insert later.
@@ -184,8 +210,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 // Check to see if the entry needs to be updated
             } else {
                 // Entry doesn't exist. Remove it from the database.
-                Uri deleteUri = ContentProvider.URI_VIDEOS.buildUpon()
-                        .appendPath(Long.toString(localVideo.getId())).build();
+                Uri deleteUri = resourceUri.buildUpon()
+                        .appendPath(Long.toString(localResource.getId())).build();
                 Log.i(TAG, "Scheduling delete: " + deleteUri);
                 batch.add(ContentProviderOperation.newDelete(deleteUri).build());
                 syncResult.stats.numDeletes++;
@@ -194,17 +220,17 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
         c.close();
 
         // Add new items
-        for (Video v : entryMap.values()) {
-            Log.i(TAG, "Scheduling insert: entry_id=" + v.getRemoteId());
-            batch.add(ContentProviderOperation.newInsert(ContentProvider.URI_VIDEOS)
-                    .withValues(v.toContentValues())
+        for (SyncResource syncItem : entryMap.values()) {
+            Log.i(TAG, "Scheduling insert: entry_id=" + syncItem.getRemoteId());
+            batch.add(ContentProviderOperation.newInsert(resourceUri)
+                    .withValues(syncItem.toContentValues())
                     .build());
             syncResult.stats.numInserts++;
         }
         Log.i(TAG, "Merge solution ready. Applying batch update");
         mContentResolver.applyBatch(ContentProvider.AUTHORITY, batch);
         mContentResolver.notifyChange(
-                ContentProvider.URI_VIDEOS, // URI where data was modified
+                resourceUri, // URI where data was modified
                 null,                           // No local observer
                 false);                         // IMPORTANT: Do not sync to network
         // This sample doesn't support uploads, but if *your* code does, make sure you set

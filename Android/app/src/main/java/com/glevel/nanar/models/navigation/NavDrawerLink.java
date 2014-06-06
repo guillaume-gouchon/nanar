@@ -6,14 +6,14 @@ import android.app.Fragment;
 /**
  * Created by guillaume on 5/28/14.
  */
-public class NavDrawerItem extends Item {
+public class NavDrawerLink extends NavItem {
 
     private final int icon;
     private final Fragment targetFragment;
 
-    public NavDrawerItem(int icon, int text, Fragment targetFragment) {
+    public NavDrawerLink(int icon, String text, Fragment targetFragment) {
         this.icon = icon;
-        this.textResource = text;
+        this.text = text;
         this.targetFragment = targetFragment;
     }
 

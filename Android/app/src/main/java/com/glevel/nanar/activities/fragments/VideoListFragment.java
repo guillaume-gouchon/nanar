@@ -43,7 +43,7 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
         mSwipeLayout.setColorScheme(R.color.action_bar_blue, R.color.launcher_yellow, R.color.launcher_yellow, R.color.launcher_yellow);
         mSwipeLayout.setOnRefreshListener(this);
 
-        getLoaderManager().initLoader(GET_VIDEOS, null, this).forceLoad();
+        getLoaderManager().initLoader(GET_VIDEOS, null, this);
 
         return rootView;
     }
@@ -79,7 +79,7 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
 
     @Override
     public void onRefresh() {
-        SyncUtils.TriggerRefresh();
+        SyncUtils.TriggerRefresh(Video.RESOURCE_ID);
         getLoaderManager().restartLoader(GET_VIDEOS, null, this).forceLoad();
     }
 

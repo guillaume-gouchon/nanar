@@ -7,6 +7,7 @@ var Errors = require('../errors');
 var Utils = require('../utils');
 var db = require('../db');
 var Video = db.models.Video;
+var Tag = db.models.Tag;
 
 
 exports.getVideos = function (req, res, next) {
@@ -73,13 +74,28 @@ exports.createVideo = function (req, res, next) {
 	var popularity = req.body.popularity;
 	var tags = req.body.tags;
 
-  // check video is unique
+  // check that video is unique
   Video.findOne({ 
 		url: req.body.url
 	})
 	.exec(function (err, video) {
 		if (err) { return next(new Errors.Error(err, 'Server error')); }
 		if (video != null) { return next(new Errors.BadRequest(err, 'Video already exist !')); }
+
+		// add tags to database
+		var hTags = tags.split(" ");
+		for (var i in hTags) {
+			var tagLabel = hTags[i];
+			if (tagLabel != null && tagLabel.length > 2) {
+				Tag.update({
+					label: tagLabel
+				}, {
+					label: tagLabel
+				}, {
+					upsert: true
+				});
+			}
+		}
 
 		// create new video
 		var video = new Video();

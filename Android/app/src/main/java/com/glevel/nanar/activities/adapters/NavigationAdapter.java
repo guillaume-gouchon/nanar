@@ -8,24 +8,23 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.glevel.nanar.R;
-import com.glevel.nanar.models.navigation.Item;
-import com.glevel.nanar.models.navigation.NavDrawerHeader;
-import com.glevel.nanar.models.navigation.NavDrawerItem;
+import com.glevel.nanar.models.navigation.NavDrawerLink;
+import com.glevel.nanar.models.navigation.NavItem;
 
 import java.util.List;
 
 /**
  * Created by guillaume on 5/28/14.
  */
-public class NavigationAdapter extends ArrayAdapter<Item> {
+public class NavigationAdapter extends ArrayAdapter<NavItem> {
 
-    public NavigationAdapter(Context context, int resource, List<Item> objects) {
+    public NavigationAdapter(Context context, int resource, List<NavItem> objects) {
         super(context, resource, objects);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Item item = getItem(position);
+        NavItem item = getItem(position);
 
         View v = convertView;
         if (v == null) {
@@ -44,9 +43,9 @@ public class NavigationAdapter extends ArrayAdapter<Item> {
         }
 
         TextView tv = (TextView) v.findViewById(R.id.label);
-        tv.setText(item.getTextResource());
+        tv.setText(item.getText());
         if (!item.isHeader()) {
-            tv.setCompoundDrawablesWithIntrinsicBounds(((NavDrawerItem) item).getIcon(), 0, 0, 0);
+            tv.setCompoundDrawablesWithIntrinsicBounds(((NavDrawerLink) item).getIcon(), 0, 0, 0);
         }
 
         return v;

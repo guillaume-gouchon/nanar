@@ -2,8 +2,13 @@ package com.glevel.nanar.activities.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.LoaderManager;
+import android.content.CursorLoader;
+import android.content.Loader;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -22,9 +27,12 @@ import android.widget.ListView;
 
 import com.glevel.nanar.R;
 import com.glevel.nanar.activities.adapters.NavigationAdapter;
-import com.glevel.nanar.models.navigation.Item;
+import com.glevel.nanar.models.Tag;
 import com.glevel.nanar.models.navigation.NavDrawerHeader;
-import com.glevel.nanar.models.navigation.NavDrawerItem;
+import com.glevel.nanar.models.navigation.NavDrawerLink;
+import com.glevel.nanar.models.navigation.NavDrawerTag;
+import com.glevel.nanar.models.navigation.NavItem;
+import com.glevel.nanar.providers.ContentProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,9 +42,12 @@ import java.util.List;
  * See the <a href="https://developer.android.com/design/patterns/navigation-drawer.html#Interaction">
  * design guidelines</a> for a complete explanation of the behaviors implemented here.
  */
-public class NavigationDrawerFragment extends Fragment {
+public class NavigationDrawerFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = "NavigationDrawerfragment";
+
+    private static final int GET_TAGS = 1;
+
 
     /**
      * Remember the position of the selected item.
@@ -66,7 +77,8 @@ public class NavigationDrawerFragment extends Fragment {
     private int mCurrentSelectedPosition = 0;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-    private List<Item> mNavItems = new ArrayList<Item>();
+    private List<NavItem> mNavItems = new ArrayList<NavItem>();
+    private NavigationAdapter mNavigationAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -82,6 +94,8 @@ public class NavigationDrawerFragment extends Fragment {
         }
 
         selectItem(mCurrentSelectedPosition);
+
+        getLoaderManager().initLoader(GET_TAGS, null, this);
     }
 
     @Override
@@ -103,7 +117,8 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
 
-        mDrawerListView.setAdapter(new NavigationAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mNavItems));
+        mNavigationAdapter = new NavigationAdapter(getActivity().getApplicationContext(), android.R.layout.simple_list_item_1, mNavItems);
+        mDrawerListView.setAdapter(mNavigationAdapter);
         mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -126,9 +141,9 @@ public class NavigationDrawerFragment extends Fragment {
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
 
         // set up the drawer's list view with items and click listener
-        mNavItems.add(new NavDrawerItem(R.drawable.ic_action_view_as_grid, R.string.browse_videos, new BrowseFragment()));
-        mNavItems.add(new NavDrawerItem(R.drawable.ic_action_star, R.string.my_favourites, new FavoritesFragment()));
-        mNavItems.add(new NavDrawerHeader(R.string.tags));
+        mNavItems.add(new NavDrawerLink(R.drawable.ic_action_view_as_grid, getString(R.string.browse_videos), new BrowseFragment()));
+        mNavItems.add(new NavDrawerLink(R.drawable.ic_action_star, getString(R.string.my_favourites), new FavoritesFragment()));
+        mNavItems.add(new NavDrawerHeader(getString(R.string.tags)));
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -263,6 +278,43 @@ public class NavigationDrawerFragment extends Fragment {
         return ((ActionBarActivity) getActivity()).getSupportActionBar();
     }
 
+    @Override
+    public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+        switch (id) {
+            case GET_TAGS:
+                return new CursorLoader(getActivity().getApplicationContext(), ContentProvider.URI_TAGS, null, null, null, "RANDOM() LIMIT 10");
+            default:
+                throw new IllegalStateException("Cannot create Loader with id[" + id + "]");
+        }
+    }
+
+    @Override
+    public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
+        if (mNavigationAdapter != null && cursor != null) {
+            DatabaseUtils.dumpCursor(cursor);
+            cursor.moveToFirst();
+            Tag tag;
+            while (cursor.moveToNext()) {
+                tag = Tag.fromCursor(cursor);
+                mNavItems.add(new NavDrawerTag(tag.getLabel()));
+            }
+        }
+        mNavigationAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void onLoaderReset(Loader<Cursor> cursorLoader) {
+        if (mNavigationAdapter != null) {
+            // remove all tags entries
+            for (NavItem navItem : mNavItems) {
+                if (navItem instanceof NavDrawerTag) {
+                    mNavItems.remove(navItem);
+                }
+            }
+            mNavigationAdapter.notifyDataSetChanged();
+        }
+    }
+
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
@@ -273,7 +325,7 @@ public class NavigationDrawerFragment extends Fragment {
         void onNavigationDrawerItemSelected(int position);
     }
 
-    public List<Item> getNavItems() {
+    public List<NavItem> getNavItems() {
         return mNavItems;
     }
 

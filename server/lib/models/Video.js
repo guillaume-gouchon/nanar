@@ -7,7 +7,7 @@ module.exports = function(db) {
       name: String,
       date_created: { type: Date, default: Date.now },
       popularity: Number,
-      tags: [db.models.Tag.schema]
+      tags: String
     }, { collection: 'videos' });
 
     return db.model('Video', schema);

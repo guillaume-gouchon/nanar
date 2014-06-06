@@ -23,12 +23,16 @@ import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.glevel.nanar.models.Tag;
+import com.glevel.nanar.models.Video;
 import com.glevel.nanar.providers.ContentProvider;
 
 /**
  * Static helper methods for working with the sync framework.
  */
 public class SyncUtils {
+
+    public static final String EXTRA_RESOURCE_ID = "";
     private static final long SYNC_FREQUENCY = 60 * 60;  // 1 hour (in seconds)
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
     // Value below must match the account type specified in res/xml/syncadapter.xml
@@ -63,7 +67,10 @@ public class SyncUtils {
         // data has been deleted. (Note that it's possible to clear app data WITHOUT affecting
         // the account list, so wee need to check both.)
         if (newAccount || !setupComplete) {
-            TriggerRefresh();
+            // sync all tables
+            TriggerRefresh(Video.RESOURCE_ID);
+            TriggerRefresh(Tag.RESOURCE_ID);
+
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putBoolean(PREF_SETUP_COMPLETE, true).commit();
         }
@@ -80,14 +87,14 @@ public class SyncUtils {
      * but the user is not actively waiting for that data, you should omit this flag; this will give
      * the OS additional freedom in scheduling your sync request.
      */
-    public static void TriggerRefresh() {
+    public static void TriggerRefresh(int resourceId) {
         Bundle b = new Bundle();
         // Disable sync backoff and ignore sync preferences. In other words...perform sync NOW!
         b.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         b.putBoolean(ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-        ContentResolver.requestSync(
-                GenericAccountService.GetAccount(ACCOUNT_TYPE), // Sync account
-                ContentProvider.AUTHORITY,                 // Content authority
-                b);                                             // Extras
+        b.putInt(EXTRA_RESOURCE_ID, resourceId);
+        ContentResolver.requestSync(GenericAccountService.GetAccount(ACCOUNT_TYPE), // Sync account
+                ContentProvider.AUTHORITY, b); // Extras
     }
+
 }

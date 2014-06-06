@@ -124,6 +124,7 @@ public class GenericAccountService extends Service {
                 throws NetworkErrorException {
             throw new UnsupportedOperationException();
         }
+
     }
 
 }
