@@ -86,14 +86,16 @@ exports.createVideo = function (req, res, next) {
 		var hTags = tags.split(" ");
 		for (var i in hTags) {
 			var tagLabel = hTags[i];
-			if (tagLabel != null && tagLabel.length > 2) {
+			logger.log('debug', 'Adding tag ' + tagLabel);
+			if (tagLabel != null && tagLabel.length >= 3) {
 				Tag.update({
 					label: tagLabel
 				}, {
 					label: tagLabel
 				}, {
 					upsert: true
-				});
+				})
+				.exec();
 			}
 		}
 

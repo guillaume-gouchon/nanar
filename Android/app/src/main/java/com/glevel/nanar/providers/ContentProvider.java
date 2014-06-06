@@ -35,7 +35,9 @@ public class ContentProvider extends android.content.ContentProvider {
 
     static {
         sURIMatcher.addURI(AUTHORITY, "tags", TYPE_TAGS);
+        sURIMatcher.addURI(AUTHORITY, "tags/#", TYPE_TAGS);
         sURIMatcher.addURI(AUTHORITY, "videos", TYPE_VIDEOS);
+        sURIMatcher.addURI(AUTHORITY, "videos/#", TYPE_VIDEOS);
         sURIMatcher.addURI(AUTHORITY, "favorites", TYPE_FAVORITES);
     }
 

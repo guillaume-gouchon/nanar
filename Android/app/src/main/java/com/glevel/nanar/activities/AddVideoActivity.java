@@ -2,13 +2,19 @@ package com.glevel.nanar.activities;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,11 +31,15 @@ import org.apache.http.message.BasicNameValuePair;
 import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class AddVideoActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "AddVideoActivity";
+
+    private static final int TAG_MINIMUM_LETTER = 3;
 
     private String mVideoTitle;
     private String mVideoId;
@@ -39,6 +49,10 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
     private View mBigMessage;
     private TextView mBigMessageLabel;
     private Animation mMessageAnimation;
+    private EditText mTagInput;
+    private ViewGroup mTagsLayout;
+
+    private List<String> mTags = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,11 +106,23 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
             public void onAnimationRepeat(Animation animation) {
             }
         });
-    }
 
-    private void updateVideoDetails() {
-        ((TextView) mVideoView.findViewById(R.id.title)).setText(mVideoTitle);
-        ImageLoader.getInstance().displayImage(YoutubeHelper.getVideoThumbnail(mVideoId), (ImageView) mVideoView.findViewById(R.id.thumbnail));
+        mTagInput = (EditText) findViewById(R.id.tagInput);
+        mTagInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
+        mTagInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if ((actionId == EditorInfo.IME_ACTION_SEND || actionId == EditorInfo.IME_ACTION_DONE || event != null
+                        && event.getAction() == KeyEvent.ACTION_DOWN && event.getKeyCode() == KeyEvent.KEYCODE_ENTER)
+                        && !mTagInput.getEditableText().toString().isEmpty() && mTagInput.getEditableText().toString().length() >= TAG_MINIMUM_LETTER) {
+                    addTag(mTagInput.getEditableText().toString());
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        mTagsLayout = (ViewGroup) findViewById(R.id.tagsLayout);
     }
 
     @Override
@@ -105,13 +131,53 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
             case R.id.publish:
                 publishVideo();
                 break;
+            case R.id.tag:
+                removeTag(view);
+                break;
         }
+    }
+
+    private void addTag(String tag) {
+        String formattedTag = formatTag(tag);
+        Log.d(TAG, "Adding tag " + formattedTag);
+        mTags.add(formattedTag);
+
+        // add view
+        View tagView = View.inflate(getApplicationContext(), R.layout.tag, null);
+        TextView tagLabelView = ((TextView) tagView.findViewById(R.id.tag_label));
+        tagLabelView.setText("#" + formattedTag);
+        tagView.setTag(R.string.add_tag, formattedTag);
+        tagView.setOnClickListener(this);
+        mTagsLayout.addView(tagView);
+
+        mTagInput.setText(null);
+        InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        mgr.hideSoftInputFromWindow(mTagInput.getWindowToken(), 0);
+    }
+
+    private String formatTag(String tag) {
+        return tag.replaceAll(" ", "").replaceAll("\\#", "");
+    }
+
+    private void removeTag(View view) {
+        mTags.remove(view.getTag(R.string.add_tag));
+        mTagsLayout.removeView(view);
+    }
+
+    private void updateVideoDetails() {
+        ((TextView) mVideoView.findViewById(R.id.title)).setText(mVideoTitle);
+        ImageLoader.getInstance().displayImage(YoutubeHelper.getVideoThumbnail(mVideoId), (ImageView) mVideoView.findViewById(R.id.thumbnail));
     }
 
     private void publishVideo() {
         ArrayList<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("name", mVideoTitle));
         params.add(new BasicNameValuePair("url", mVideoId));
+        StringBuffer tags = new StringBuffer();
+        for (int i = 0; i < mTags.size(); i++) {
+            tags.append(mTags.get(i) + " ");
+        }
+        params.add(new BasicNameValuePair("tags", Arrays.toString(mTags.toArray()).replaceAll(" ", "").replaceAll("\\[", "").replaceAll("\\]", "").replaceAll(",", " ")));
 
         try {
             new RestClient(RestClient.HttpMethod.POST, Video.RESOURCE_URL, null, params, new ProgressDialog(this)) {

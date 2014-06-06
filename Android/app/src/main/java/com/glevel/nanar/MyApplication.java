@@ -20,6 +20,7 @@ public class MyApplication extends Application {
         DisplayImageOptions options = new DisplayImageOptions.Builder()
                 .cacheOnDisk(true)
                 .cacheInMemory(true)
+                .showImageOnLoading(R.drawable.ic_chuck)
                 .build();
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(getApplicationContext())
                 .defaultDisplayImageOptions(options)

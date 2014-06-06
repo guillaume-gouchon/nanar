@@ -1,4 +1,11 @@
 <resources>
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="navigation_drawer_divider">2dp</dimen>
+    <dimen name="tag_border_radius">2dp</dimen>
+    <dimen name="video_list_padding">7dp</dimen>
+    <dimen name="video_list_divider_height">5dp</dimen>
+    <dimen name="drawer_header_item_padding">8dp</dimen>
+    <dimen name="tags_spacing">10dp</dimen>
+    <dimen name="tag_close_margin">5dp</dimen>
+    <dimen name="edit_text_padding">7dp</dimen>
 </resources>

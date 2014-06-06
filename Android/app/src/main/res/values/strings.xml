@@ -17,14 +17,14 @@
     <string name="message_remove_to_favorites">Don\'t like it anymore ?</string>
     <string name="share_video_subject">Check out this video I have found on %s !</string>
 
-
     <!--Add Video Activity-->
-    <string name="publish_video">Publish it !</string>
+    <string name="publish_video">Publish !</string>
     <string name="publish_video_activity_title">Publish a video</string>
     <string name="error_add_video">An error occurred while adding this video, please check your Internet connection !</string>
     <string name="error_video_already_exist">This video has already been added on the app, no need to add it again !</string>
     <string name="error_bad_video">You can only share Youtube videos on this app...</string>
     <string name="success_video_added">Video has been added successfully !</string>
+    <string name="add_tag">add tags...</string>
 
     <!--Search-->
     <string name="search_title">Search videos</string>
@@ -55,7 +55,7 @@
     <string name="about_menu_title">About</string>
     <string name="about_title">About Nanar</string>
     <string name="about_credits">Developed by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nThis app is dedicated to all the bad movies fans around the world, who enjoy spending nights watching Chuck (Norris), Christophe (Lambert), Steven (Seagal), Richard (Harrison), etc...</string>
-    <string name="about_blog">All the videos are retrieved from Youtube.\n\nYou can add new videos by using Share functionality on the Youtube application !</string>
+    <string name="about_blog">All the videos are retrieved from Youtube.\n\nYou can add new videos by using the share button on the Youtube application !</string>
     <string name="about_version">Version : 1.0.0</string>
 
     <!-- Share app -->

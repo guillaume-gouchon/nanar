@@ -27,7 +27,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Tag.CREATE_TABLE);
         db.execSQL(Video.CREATE_TABLE);
-        db.execSQL(Favorite.CREATE_TABLE);
+        if (!db.needUpgrade(DATABASE_VERSION)) {
+            db.execSQL(Favorite.CREATE_TABLE);
+        }
     }
 
     @Override
