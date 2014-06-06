@@ -26,7 +26,7 @@ public class FilterFragment extends VideoListFragment {
         Bundle args = getArguments();
         mFilter = args.getString(EXTRA_FILTER);
 
-        getActivity().getActionBar().setTitle("#" + mFilter);
+        getActivity().getActionBar().setTitle("Filter : #" + mFilter);
 
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         return rootView;
