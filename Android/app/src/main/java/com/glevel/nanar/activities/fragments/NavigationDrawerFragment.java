@@ -292,26 +292,33 @@ public class NavigationDrawerFragment extends Fragment implements LoaderManager.
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         if (mNavigationAdapter != null && cursor != null) {
             DatabaseUtils.dumpCursor(cursor);
-            cursor.moveToFirst();
+
+            removeTagsEntries();
+
             Tag tag;
             while (cursor.moveToNext()) {
                 tag = Tag.fromCursor(cursor);
                 mNavItems.add(new NavDrawerTag(tag.getLabel()));
             }
+
+            mNavigationAdapter.notifyDataSetChanged();
         }
-        mNavigationAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         if (mNavigationAdapter != null) {
-            // remove all tags entries
-            for (NavItem navItem : mNavItems) {
-                if (navItem instanceof NavDrawerTag) {
-                    mNavItems.remove(navItem);
-                }
-            }
+            removeTagsEntries();
             mNavigationAdapter.notifyDataSetChanged();
+        }
+    }
+
+    private void removeTagsEntries() {
+        // remove all tags entries
+        int n = mNavItems.size() - 1;
+        while (n > 2) {
+            mNavItems.remove(n);
+            n--;
         }
     }
 

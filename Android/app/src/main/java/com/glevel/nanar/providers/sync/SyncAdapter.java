@@ -95,9 +95,8 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority,
                               ContentProviderClient provider, SyncResult syncResult) {
-        Log.i(TAG, "Beginning network synchronization");
-
         int resourceId = extras.getInt(SyncUtils.EXTRA_RESOURCE_ID);
+        Log.i(TAG, "Beginning network synchronization for resource " + resourceId);
 
         switch (resourceId) {
             case Video.RESOURCE_ID:
@@ -107,7 +106,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
                 performSyncForResource(syncResult, Tag.RESOURCE_URL, ContentProvider.URI_TAGS, Tag.class);
                 break;
             default:
-                throw new IllegalArgumentException("Incorrect Resource Id");
+                performSyncForResource(syncResult, Video.RESOURCE_URL, ContentProvider.URI_VIDEOS, Video.class);
         }
     }
 

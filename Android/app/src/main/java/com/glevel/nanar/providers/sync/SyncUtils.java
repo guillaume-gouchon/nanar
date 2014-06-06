@@ -33,7 +33,7 @@ import com.glevel.nanar.providers.ContentProvider;
 public class SyncUtils {
 
     public static final String EXTRA_RESOURCE_ID = "";
-    private static final long SYNC_FREQUENCY = 60 * 60;  // 1 hour (in seconds)
+    private static final long SYNC_FREQUENCY = 2 * 60* 60;  // 2 hours (in seconds)
     private static final String PREF_SETUP_COMPLETE = "setup_complete";
     // Value below must match the account type specified in res/xml/syncadapter.xml
     public static final String ACCOUNT_TYPE = "com.glevel.nanar.account";
@@ -58,8 +58,12 @@ public class SyncUtils {
             ContentResolver.setSyncAutomatically(account, ContentProvider.AUTHORITY, true);
             // Recommend a schedule for automatic synchronization. The system may modify this based
             // on other scheduled syncs and network utilization.
-            ContentResolver.addPeriodicSync(
-                    account, ContentProvider.AUTHORITY, new Bundle(), SYNC_FREQUENCY);
+            Bundle bundleVideos = new Bundle();
+            bundleVideos.putInt(EXTRA_RESOURCE_ID, Video.RESOURCE_ID);
+            ContentResolver.addPeriodicSync(account, ContentProvider.AUTHORITY, bundleVideos, SYNC_FREQUENCY);
+            Bundle bundleTags = new Bundle();
+            bundleTags.putInt(EXTRA_RESOURCE_ID, Tag.RESOURCE_ID);
+            ContentResolver.addPeriodicSync(account, ContentProvider.AUTHORITY, bundleTags, SYNC_FREQUENCY);
             newAccount = true;
         }
 
@@ -67,10 +71,8 @@ public class SyncUtils {
         // data has been deleted. (Note that it's possible to clear app data WITHOUT affecting
         // the account list, so wee need to check both.)
         if (newAccount || !setupComplete) {
-            // sync all tables
             TriggerRefresh(Video.RESOURCE_ID);
             TriggerRefresh(Tag.RESOURCE_ID);
-
             PreferenceManager.getDefaultSharedPreferences(context).edit()
                     .putBoolean(PREF_SETUP_COMPLETE, true).commit();
         }

@@ -11,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
 import java.util.HashMap;
 
 /**
@@ -100,6 +101,7 @@ public class Video implements Parcelable, SyncResource {
         args.put(COL_VIDEO_ID, videoId);
         args.put(COL_TITLE, title);
         args.put(COL_TAGS, tags);
+        args.put(COL_CREATED_DATE, new Date().getTime());
         return args;
     }
 

@@ -17,10 +17,12 @@ public class NavDrawerLink extends NavItem {
         this.targetFragment = targetFragment;
     }
 
+    @Override
     public int getIcon() {
         return icon;
     }
 
+    @Override
     public Fragment getTargetFragment() {
         return targetFragment;
     }

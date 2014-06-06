@@ -23,11 +23,12 @@
     <string name="error_add_video">An error occurred while adding this video, please check your Internet connection !</string>
     <string name="error_video_already_exist">This video has already been added on the app, no need to add it again !</string>
     <string name="error_bad_video">You can only share Youtube videos on this app...</string>
-    <string name="success_video_added">Video has been added successfully !</string>
+    <string name="success_video_added">The video has been added !</string>
     <string name="add_tag">add tags...</string>
 
     <!--Search-->
     <string name="search_title">Search videos</string>
+    <string name="search_activity_title">Search results</string>
 
     <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>

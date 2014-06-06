@@ -16,7 +16,7 @@ public class NavDrawerTag extends NavItem {
     private final Fragment targetFragment;
 
     public NavDrawerTag(String text) {
-        this.icon = R.drawable.ic_action_view_as_grid;
+        this.icon = R.drawable.ic_hash_tag;
         this.text = text;
         this.targetFragment = new FilterFragment();
         Bundle args = new Bundle();
@@ -24,10 +24,12 @@ public class NavDrawerTag extends NavItem {
         targetFragment.setArguments(args);
     }
 
+    @Override
     public int getIcon() {
         return icon;
     }
 
+    @Override
     public Fragment getTargetFragment() {
         return targetFragment;
     }

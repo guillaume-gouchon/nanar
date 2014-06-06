@@ -45,7 +45,7 @@ public class NavigationAdapter extends ArrayAdapter<NavItem> {
         TextView tv = (TextView) v.findViewById(R.id.label);
         tv.setText(item.getText());
         if (!item.isHeader()) {
-            tv.setCompoundDrawablesWithIntrinsicBounds(((NavDrawerLink) item).getIcon(), 0, 0, 0);
+            tv.setCompoundDrawablesWithIntrinsicBounds(item.getIcon(), 0, 0, 0);
         }
 
         return v;

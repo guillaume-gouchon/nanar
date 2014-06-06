@@ -11,18 +11,22 @@ import android.preference.PreferenceManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
 import com.glevel.nanar.R;
+import com.glevel.nanar.activities.adapters.AutoCompleteAdapter;
 import com.glevel.nanar.activities.fragments.BrowseFragment;
 import com.glevel.nanar.activities.fragments.NavigationDrawerFragment;
-import com.glevel.nanar.models.navigation.NavDrawerLink;
+import com.glevel.nanar.models.navigation.NavItem;
 import com.glevel.nanar.utils.ApplicationUtils;
 
 
 public class MainActivity extends ActionBarActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+
+    private static final String TAG = "MainActivity";
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
@@ -50,7 +54,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         if (position == 0) {
             targetFragment = new BrowseFragment();
         } else {
-            NavDrawerLink itemSelected = (NavDrawerLink) mNavigationDrawerFragment.getNavItems().get(position);
+            NavItem itemSelected = mNavigationDrawerFragment.getNavItems().get(position);
             targetFragment = itemSelected.getTargetFragment();
         }
 
@@ -72,8 +76,10 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
 
             // associate searchable configuration with the SearchView
             SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+            final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+            searchView.setSuggestionsAdapter(new AutoCompleteAdapter(getApplicationContext()));
+            searchView.setOnSuggestionListener(new AutoCompleteAdapter.MySuggestionListener(searchView));
 
             restoreActionBar();
 
@@ -97,6 +103,19 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d(TAG, query);
+        }
     }
 
 }

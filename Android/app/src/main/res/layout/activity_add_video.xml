@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
+            <AutoCompleteTextView
                 android:id="@+id/tagInput"
                 android:padding="@dimen/edit_text_padding"
                 android:hint="@string/add_tag"

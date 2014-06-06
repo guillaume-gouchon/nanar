@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.glevel.nanar.R;
 import com.glevel.nanar.activities.VideoDetailsActivity;
 import com.glevel.nanar.activities.adapters.VideoAdapter;
+import com.glevel.nanar.models.Tag;
 import com.glevel.nanar.models.Video;
 import com.glevel.nanar.providers.sync.SyncUtils;
 
@@ -80,6 +81,7 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
     @Override
     public void onRefresh() {
         SyncUtils.TriggerRefresh(Video.RESOURCE_ID);
+        SyncUtils.TriggerRefresh(Tag.RESOURCE_ID);
         getLoaderManager().restartLoader(GET_VIDEOS, null, this).forceLoad();
     }
 

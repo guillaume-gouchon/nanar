@@ -13,13 +13,16 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.glevel.nanar.MyApplication;
 import com.glevel.nanar.R;
+import com.glevel.nanar.activities.adapters.AutoCompleteAdapter;
 import com.glevel.nanar.models.Video;
 import com.glevel.nanar.providers.rest.RestClient;
 import com.glevel.nanar.utils.YoutubeHelper;
@@ -39,20 +42,23 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
 
     private static final String TAG = "AddVideoActivity";
 
+    private static final int GET_TAGS = 1;
     private static final int TAG_MINIMUM_LETTER = 3;
 
     private String mVideoTitle;
     private String mVideoId;
+    private List<String> mTags = new ArrayList<String>();
+
     private Button mPublishButton;
     private TextView mMessageTV;
     private View mVideoView;
     private View mBigMessage;
     private TextView mBigMessageLabel;
     private Animation mMessageAnimation;
-    private EditText mTagInput;
+    private AutoCompleteTextView mTagInput;
     private ViewGroup mTagsLayout;
 
-    private List<String> mTags = new ArrayList<String>();
+    private SimpleCursorAdapter mAutoCompleteAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,7 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
         }
 
         updateVideoDetails();
+
     }
 
     private void setupUI() {
@@ -107,7 +114,7 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
             }
         });
 
-        mTagInput = (EditText) findViewById(R.id.tagInput);
+        mTagInput = (AutoCompleteTextView) findViewById(R.id.tagInput);
         mTagInput.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mTagInput.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -119,6 +126,16 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
                     return true;
                 }
                 return false;
+            }
+        });
+        // set adapter for auto complete
+        mAutoCompleteAdapter = new AutoCompleteAdapter(getApplicationContext());
+        mTagInput.setAdapter(mAutoCompleteAdapter);
+        mTagInput.setThreshold(AutoCompleteAdapter.AUTO_COMPLETE_MINIMUM_LETTER);
+        mTagInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                addTag(((TextView) view).getText().toString());
             }
         });
 
@@ -151,6 +168,10 @@ public class AddVideoActivity extends Activity implements View.OnClickListener {
         mTagsLayout.addView(tagView);
 
         mTagInput.setText(null);
+        closeKeyboard();
+    }
+
+    private void closeKeyboard() {
         InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         mgr.hideSoftInputFromWindow(mTagInput.getWindowToken(), 0);
     }
