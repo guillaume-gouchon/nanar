@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string name="app_name">Nanar</string>
+    <string name="placeholder">placeholder</string>
+    <string name="viewholder">viewholder</string>
+    
     <!--Videos list-->
     <string name="loading">Chargement...</string>
     <string name="no_video">Pas de vidéo... pour l\'instant !</string>
