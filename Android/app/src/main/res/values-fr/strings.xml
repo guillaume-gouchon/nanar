@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--Videos list-->
+    <string name="loading">Chargement...</string>
+    <string name="no_video">Pas de vidéo... pour l\'instant !</string>
+    <string name="no_result">Pas de résultats...</string>
+
+    <!--Video Details Activity-->
+    <string name="add_to_favorites">Ajouter aux favoris</string>
+    <string name="remove_from_favorites">Retirer des favoris</string>
+    <string name="message_add_to_favorites">Très bon choix !</string>
+    <string name="message_remove_to_favorites">T\'as changé d\'avis ?</string>
+    <string name="share_video_subject">Regardez cette vidéo que j\'ai trouvé sur %s !</string>
+
+    <!--Add Video Activity-->
+    <string name="publish_video">Publier !</string>
+    <string name="publish_video_activity_title">Publier un nanar</string>
+    <string name="error_add_video">Une erreur est survenue pendant la publication du nanar, vérifiez votre connexion Internet !</string>
+    <string name="error_video_already_exist">Ce nanar est déja publié sur l\'application, nul besoin de l\'ajouter à nouveau !</string>
+    <string name="error_bad_video">Vous ne pouvez publier que des vidéos provenant de Youtube...</string>
+    <string name="success_video_added">Ce nanar a bien été ajouté !</string>
+    <string name="add_tag">ajouter des tags...</string>
+
+    <!--Search-->
+    <string name="search_title">Rechercher des nanars</string>
+    <string name="search_activity_title">Résultats de la recherche</string>
+
+    <!--Navigation Drawer-->
+    <string name="navigation_drawer_open">Ouvrir la panneau latéral</string>
+    <string name="navigation_drawer_close">Fermer le panneau latéral</string>
+    <string name="browse_videos">Parcourir les nanars</string>
+    <string name="my_favourites">Mes Favoris</string>
+    <string name="tags">Tags Populaires</string>
+
+    <!-- Contact -->
+    <string name="contact_menu_title">Contact</string>
+    <string name="mail_address">guillaume.gouchon@gmail.com</string>
+    <string name="contact_title">Question à propos de </string>
+    <string name="contact_support_via">Contacter le support technique via&#8230;</string>
+    <string name="no_mail_client">Vous n\'avez pas d\'application de mail installée sur votre appareil&#8230;</string>
+
+    <!-- Rate Dialog -->
+    <string name="rate_menu_title">Noter l\'application</string>
+    <string name="rate_title">Noter l\'application ?</string>
+    <string name="rate_dont_want">Non</string>
+    <string name="rate_later">Me le rappeler plus tard</string>
+    <string name="rate_now">Noter l\'application maintenant !</string>
+    <string name="rate_message">Si vous aimez utiliser %s, merci de prendre un moment pour noter l\'application.\nMerci de votre soutien !</string>
+
+    <!-- About Dialog -->
+    <string name="about_menu_title">À propos</string>
+    <string name="about_title">À propos de Nanar</string>
+    <string name="about_credits">Developpé par <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nCette application est dediée à tous les fans de Nanars du monde entier, qui aiment passer des soirées en compagnie de Chuck (Norris), Christophe (Lambert), Steven (Seagal), ou encore Richard (Harrison), etc...</string>
+    <string name="about_blog">Toutes les vidéos sur cette application proviennent de Youtube.\n\nVous pouvez ajouter de nouveaux Nanars en utilisant le bouton Partager de l\'application Youtube !</string>
+    <string name="about_version">Version : 1.0.0</string>
+
+    <!-- Share app -->
+    <string name="share_menu_title">Partager</string>
+    <string name="share_via">Partager via</string>
+    <string name="share_subject">Jette un oeil à l\'application %s pour Android !</string>
+    <string name="share_message">Regarde les meilleurs extraits de tes Nanars préférés ! Télécharge l\'application sur Google Play !\nhttps://play.google.com/store/apps/details?id=%s</string>
+
+</resources>

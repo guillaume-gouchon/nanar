@@ -41,7 +41,7 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
 
         // implements pull to refresh
         mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
-        mSwipeLayout.setColorScheme(R.color.action_bar_blue, R.color.launcher_yellow, R.color.launcher_yellow, R.color.launcher_yellow);
+        mSwipeLayout.setColorScheme(R.color.action_bar_blue, R.color.big_message_green, R.color.big_message_green, R.color.big_message_green);
         mSwipeLayout.setOnRefreshListener(this);
 
         getLoaderManager().initLoader(GET_VIDEOS, null, this);
