@@ -34,6 +34,7 @@
     </style>
 
     <style name="ActionBar.Solid.Blue" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="android:icon">@drawable/ic_logo</item>
         <item name="background">@drawable/ab_solid_blue</item>
         <item name="backgroundStacked">@drawable/ab_stacked_solid_blue</item>
         <item name="backgroundSplit">@drawable/ab_bottom_solid_blue</item>

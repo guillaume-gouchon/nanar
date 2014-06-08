@@ -1,13 +1,14 @@
 package com.glevel.nanar.activities;
 
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -44,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         ApplicationUtils.showRateDialogIfNeeded(this);
 
         // set up the drawer
-        mNavigationDrawerFragment = (NavigationDrawerFragment) getFragmentManager().findFragmentById(R.id.navigation_drawer);
+        mNavigationDrawerFragment = (NavigationDrawerFragment) getSupportFragmentManager().findFragmentById(R.id.navigation_drawer);
         mNavigationDrawerFragment.setUp(R.id.navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
@@ -59,7 +60,7 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
         }
 
         // update the main content by replacing fragments
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.container, targetFragment).commit();
     }
 
@@ -75,11 +76,13 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
             getMenuInflater().inflate(R.menu.main, menu);
 
             // associate searchable configuration with the SearchView
-            SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-            searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-            searchView.setSuggestionsAdapter(new AutoCompleteAdapter(getApplicationContext()));
-            searchView.setOnSuggestionListener(new AutoCompleteAdapter.MySuggestionListener(searchView));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+                SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+                final SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+                searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                searchView.setSuggestionsAdapter(new AutoCompleteAdapter(getApplicationContext()));
+                searchView.setOnSuggestionListener(new AutoCompleteAdapter.MySuggestionListener(searchView));
+            }
 
             restoreActionBar();
 
@@ -100,6 +103,11 @@ public class MainActivity extends ActionBarActivity implements NavigationDrawerF
                 return true;
             case R.id.action_rate_app:
                 ApplicationUtils.rateTheApp(this);
+                return true;
+            case R.id.search:
+                if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+                    onSearchRequested();
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);

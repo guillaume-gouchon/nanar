@@ -1,6 +1,7 @@
 package com.glevel.nanar.models.navigation;
 
-import android.app.Fragment;
+
+import android.support.v4.app.Fragment;
 
 /**
  * Created by guillaume on 5/28/14.

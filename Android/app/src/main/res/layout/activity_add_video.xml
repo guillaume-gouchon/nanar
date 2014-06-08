@@ -1,55 +1,56 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
-    android:background="@color/bg_activities">
+    android:background="@color/bg_activities"
+    android:padding="15dp">
 
     <LinearLayout
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center">
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <include
             android:id="@+id/video"
             layout="@layout/video_list_item"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent" />
-
-        <GridLayout
-            android:layout_marginTop="20dp"
-            android:id="@+id/tagsLayout"
-            android:columnCount="2"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></GridLayout>
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.GridLayout
+            android:id="@+id/tagsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:columnCount="2"
+            app:orientation="horizontal"></android.support.v7.widget.GridLayout>
 
         <LinearLayout
-            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
-            android:background="@color/bg_video_item"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/bg_video_item"
             android:orientation="horizontal">
 
             <AutoCompleteTextView
                 android:id="@+id/tagInput"
-                android:padding="@dimen/edit_text_padding"
-                android:hint="@string/add_tag"
-                android:inputType="textNoSuggestions|textVisiblePassword"
-                android:singleLine="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone" />
+                android:hint="@string/add_tag"
+                android:imeOptions="actionDone"
+                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:padding="@dimen/edit_text_padding"
+                android:singleLine="true" />
         </LinearLayout>
 
         <Button
-            style="@style/Button"
             android:id="@+id/publish"
-            android:layout_marginTop="20dp"
-            android:layout_centerHorizontal="true"
-            android:layout_height="wrap_content"
+            style="@style/Button"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
             android:text="@string/publish_video" />
     </LinearLayout>
 

@@ -1,8 +1,9 @@
 package com.glevel.nanar.activities;
 
-import android.app.Activity;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,10 +22,10 @@ import com.glevel.nanar.utils.ApplicationUtils;
 import com.glevel.nanar.utils.YoutubeHelper;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
-import com.google.android.youtube.player.YouTubePlayerFragment;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 
 
-public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnInitializedListener {
+public class VideoDetailsActivity extends ActionBarActivity implements YouTubePlayer.OnInitializedListener {
 
     private static final String TAG = "VideoDetailsActivity";
 
@@ -33,7 +34,7 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
     private Video mVideo;
     private boolean mIsFavorite;
 
-    private YouTubePlayerFragment mPlayerFragment;
+    private YouTubePlayerSupportFragment mPlayerFragment;
     private View mBigMessage;
     private Animation mMessageAnimation;
     private TextView mBigMessageLabel;
@@ -50,11 +51,13 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
         // update action bar title
         setTitle(mVideo.getTitle());
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         setContentView(R.layout.activity_video_details);
 
         // prepare youtube fragment
-        mPlayerFragment = new YouTubePlayerFragment();
-        getFragmentManager().beginTransaction().add(R.id.container, mPlayerFragment).commit();
+        mPlayerFragment = new YouTubePlayerSupportFragment();
+        getSupportFragmentManager().beginTransaction().add(R.id.container, mPlayerFragment).commit();
         mPlayerFragment.initialize(YoutubeHelper.YOUTUBE_DEV_KEY, this);
 
         // check if this video is in my favorites and update UI
@@ -109,9 +112,17 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
             case R.id.action_share:
                 shareVideo();
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
+            switch (item.getItemId()) {
+                case android.R.id.home:
+                    finish();
+                    return true;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     private void shareVideo() {
@@ -123,7 +134,7 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
         getContentResolver().insert(ContentProvider.URI_FAVORITES, mVideo.toContentValues());
         mIsFavorite = true;
         showMessage(R.string.message_add_to_favorites, R.color.big_message_green);
-        invalidateOptionsMenu();
+        supportInvalidateOptionsMenu();
     }
 
     private void unFavoriteVideo() {
@@ -131,7 +142,7 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
         getContentResolver().delete(ContentProvider.URI_FAVORITES, Favorite.COL_VIDEO_ID + "=?", new String[]{mVideo.getVideoId()});
         mIsFavorite = false;
         showMessage(R.string.message_remove_to_favorites, R.color.big_message_red);
-        invalidateOptionsMenu();
+        supportInvalidateOptionsMenu();
     }
 
     private void showMessage(int textResource, int color) {
@@ -151,17 +162,17 @@ public class VideoDetailsActivity extends Activity implements YouTubePlayer.OnIn
         youTubePlayer.setPlaybackEventListener(new YouTubePlayer.PlaybackEventListener() {
             @Override
             public void onPlaying() {
-                getActionBar().hide();
+                getSupportActionBar().hide();
             }
 
             @Override
             public void onPaused() {
-                getActionBar().show();
+                getSupportActionBar().show();
             }
 
             @Override
             public void onStopped() {
-                getActionBar().show();
+                getSupportActionBar().show();
             }
 
             @Override

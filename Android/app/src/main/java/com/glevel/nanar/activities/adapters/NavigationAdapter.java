@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.glevel.nanar.R;
-import com.glevel.nanar.models.navigation.NavDrawerLink;
 import com.glevel.nanar.models.navigation.NavItem;
 
 import java.util.List;
@@ -18,8 +17,11 @@ import java.util.List;
  */
 public class NavigationAdapter extends ArrayAdapter<NavItem> {
 
+    private final LayoutInflater mInflater;
+
     public NavigationAdapter(Context context, int resource, List<NavItem> objects) {
         super(context, resource, objects);
+        mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -27,25 +29,21 @@ public class NavigationAdapter extends ArrayAdapter<NavItem> {
         NavItem item = getItem(position);
 
         View v = convertView;
-        if (v == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-            if (item.isHeader()) {
-                v = inflater.inflate(R.layout.navigation_drawer_header_item, null);
-                v.setOnClickListener(null);
-                v.setOnLongClickListener(null);
-                v.setLongClickable(false);
-            } else {
-                v = inflater.inflate(R.layout.navigation_drawer_item, null);
-            }
-
-
+        if (item.isHeader()) {
+            v = mInflater.inflate(R.layout.navigation_drawer_header_item, null);
+            v.setOnClickListener(null);
+            v.setOnLongClickListener(null);
+            v.setLongClickable(false);
+        } else {
+            v = mInflater.inflate(R.layout.navigation_drawer_item, null);
         }
 
         TextView tv = (TextView) v.findViewById(R.id.label);
         tv.setText(item.getText());
-        if (!item.isHeader()) {
+        if (!item.isHeader() && item.getIcon() > 0) {
             tv.setCompoundDrawablesWithIntrinsicBounds(item.getIcon(), 0, 0, 0);
+        } else {
+            tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
         }
 
         return v;

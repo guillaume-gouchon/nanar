@@ -29,13 +29,14 @@
     <!--Search-->
     <string name="search_title">Search videos</string>
     <string name="search_activity_title">Search results</string>
+    <string name="filter">Filter :</string>
 
     <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="browse_videos">Browse videos</string>
     <string name="my_favourites">My favorites</string>
-    <string name="tags">Popular Tags</string>
+    <string name="tags">POPULAR TAGS</string>
 
     <!-- Contact -->
     <string name="contact_menu_title">Contact</string>
@@ -57,7 +58,7 @@
     <string name="about_title">About Nanar</string>
     <string name="about_credits">Developed by <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nThis app is dedicated to all the bad movies fans around the world, who enjoy spending nights watching Chuck (Norris), Christophe (Lambert), Steven (Seagal), Richard (Harrison), etc...</string>
     <string name="about_blog">All the videos are retrieved from Youtube.\n\nYou can add new videos by using the share button on the Youtube application !</string>
-    <string name="about_version">Version : 1.0.0</string>
+    <string name="about_version">Version : %s</string>
 
     <!-- Share app -->
     <string name="share_menu_title">Share</string>

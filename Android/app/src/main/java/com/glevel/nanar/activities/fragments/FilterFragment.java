@@ -1,9 +1,10 @@
 package com.glevel.nanar.activities.fragments;
 
-import android.content.CursorLoader;
-import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class FilterFragment extends VideoListFragment {
         Bundle args = getArguments();
         mFilter = args.getString(EXTRA_FILTER);
 
-        getActivity().getActionBar().setTitle("Filter : #" + mFilter);
+        ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(getString(R.string.filter) + " #" + mFilter);
 
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
         return rootView;

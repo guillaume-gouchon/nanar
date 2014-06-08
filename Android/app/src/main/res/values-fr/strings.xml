@@ -29,13 +29,14 @@
     <!--Search-->
     <string name="search_title">Rechercher des nanars</string>
     <string name="search_activity_title">Résultats de la recherche</string>
+    <string name="filter">Filtre :</string>
 
     <!--Navigation Drawer-->
     <string name="navigation_drawer_open">Ouvrir la panneau latéral</string>
     <string name="navigation_drawer_close">Fermer le panneau latéral</string>
     <string name="browse_videos">Parcourir les nanars</string>
-    <string name="my_favourites">Mes Favoris</string>
-    <string name="tags">Tags Populaires</string>
+    <string name="my_favourites">Mes favoris</string>
+    <string name="tags">TAGS POPULAIRES</string>
 
     <!-- Contact -->
     <string name="contact_menu_title">Contact</string>
@@ -57,7 +58,7 @@
     <string name="about_title">À propos de Nanar</string>
     <string name="about_credits">Developpé par <a href="http://gouchon.com">Guillaume Gouchon</a>.\n\nCette application est dediée à tous les fans de Nanars du monde entier, qui aiment passer des soirées en compagnie de Chuck (Norris), Christophe (Lambert), Steven (Seagal), ou encore Richard (Harrison), etc...</string>
     <string name="about_blog">Toutes les vidéos sur cette application proviennent de Youtube.\n\nVous pouvez ajouter de nouveaux Nanars en utilisant le bouton Partager de l\'application Youtube !</string>
-    <string name="about_version">Version : 1.0.0</string>
+    <string name="about_version">Version : %s</string>
 
     <!-- Share app -->
     <string name="share_menu_title">Partager</string>

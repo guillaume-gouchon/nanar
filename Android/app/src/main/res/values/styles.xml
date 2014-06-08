@@ -3,7 +3,7 @@
     <!--Navigation Drawer-->
 
     <style name="NavigationDrawerHeader">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:gravity">left</item>
         <item name="android:textColor">@color/navigation_drawer_header_text_color</item>

@@ -1,7 +1,9 @@
 package com.glevel.nanar.activities.adapters;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.database.Cursor;
+import android.os.Build;
 import android.util.Log;
 import android.widget.FilterQueryProvider;
 import android.widget.SearchView;
@@ -23,6 +25,7 @@ public class AutoCompleteAdapter extends SimpleCursorAdapter {
     public static final int AUTO_COMPLETE_MINIMUM_LETTER = 2;
 
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public AutoCompleteAdapter(Context context) {
         super(context, R.layout.auto_complete_item, null, new String[]{Tag.COL_LABEL}, new int[]{R.id.text}, 0);
 
@@ -49,6 +52,7 @@ public class AutoCompleteAdapter extends SimpleCursorAdapter {
         });
     }
 
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public static class MySuggestionListener implements SearchView.OnSuggestionListener {
 
         private final SearchView searchView;

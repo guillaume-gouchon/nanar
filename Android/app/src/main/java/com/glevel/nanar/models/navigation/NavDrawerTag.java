@@ -1,8 +1,8 @@
 package com.glevel.nanar.models.navigation;
 
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 import com.glevel.nanar.R;
 import com.glevel.nanar.activities.fragments.FilterFragment;

@@ -1,6 +1,7 @@
 package com.glevel.nanar.providers.sync;
 
 import android.accounts.Account;
+import android.annotation.TargetApi;
 import android.content.AbstractThreadedSyncAdapter;
 import android.content.ContentProviderClient;
 import android.content.ContentProviderOperation;
@@ -10,7 +11,9 @@ import android.content.OperationApplicationException;
 import android.content.SyncResult;
 import android.database.Cursor;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
 import android.os.RemoteException;
 import android.util.Log;
 
@@ -72,6 +75,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
     /**
      * Constructor. Obtains handle to content resolver for later use.
      */
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public SyncAdapter(Context context, boolean autoInitialize, boolean allowParallelSyncs) {
         super(context, autoInitialize, allowParallelSyncs);
         mContentResolver = context.getContentResolver();
@@ -184,6 +188,7 @@ class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         final ContentResolver contentResolver = getContext().getContentResolver();
 
+        Looper.prepare();
         String response = RestClient.convertStreamToString(stream);
         Method responseToMapMethod = resourceClass.getMethod("responseToMap", String.class);
         HashMap<String, SyncResource> entryMap = (HashMap<String, SyncResource>) responseToMapMethod.invoke(null, response);

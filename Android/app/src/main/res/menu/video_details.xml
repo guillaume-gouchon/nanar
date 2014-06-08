@@ -1,19 +1,23 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_favorite"
         android:icon="@drawable/ic_action_star_unactive"
         android:showAsAction="ifRoom"
-        android:title="@string/add_to_favorites" />
+        android:title="@string/add_to_favorites"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_unfavorite"
         android:icon="@drawable/ic_action_star_active"
         android:showAsAction="ifRoom"
         android:title="@string/remove_from_favorites"
-        android:visible="false" />
+        android:visible="false"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/action_share"
         android:icon="@drawable/ic_action_share"
         android:showAsAction="ifRoom"
-        android:title="@string/share_menu_title" />
+        android:title="@string/share_menu_title"
+        app:showAsAction="ifRoom" />
 </menu>

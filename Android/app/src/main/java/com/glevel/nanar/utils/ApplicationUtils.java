@@ -1,7 +1,6 @@
 package com.glevel.nanar.utils;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
@@ -35,7 +34,8 @@ public class ApplicationUtils {
             View view = (View) inflater.inflate(R.layout.dialog_rate, null);
 
             // Create and show custom alert dialog
-            final Dialog dialog = new AlertDialog.Builder(activity, R.style.Dialog).setView(view).create();
+            final Dialog dialog = new Dialog(activity, R.style.Dialog);
+            dialog.setContentView(view);
 
             ((TextView) view.findViewById(R.id.message)).setText(activity.getString(R.string.rate_message, activity.getString(R.string.app_name)));
             ((Button) view.findViewById(R.id.cancelButton)).setOnClickListener(new OnClickListener() {
@@ -49,7 +49,8 @@ public class ApplicationUtils {
             ((Button) view.findViewById(R.id.neutralButton)).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    editor.putInt(PREFS_RATE_DIALOG_IN, 5);
+                    editor.putInt(PREFS_RATE_DIALOG_IN, NB_LAUNCHES_RATE_DIALOG_APPEARS);
+                    editor.commit();
                     dialog.dismiss();
                 }
             });
@@ -70,6 +71,8 @@ public class ApplicationUtils {
             // Remove padding from parent
             ViewGroup parent = (ViewGroup) view.getParent();
             parent.setPadding(0, 0, 0, 0);
+
+            dialog.show();
         }
     }
 

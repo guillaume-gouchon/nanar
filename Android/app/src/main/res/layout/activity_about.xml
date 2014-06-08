@@ -6,34 +6,35 @@
     android:background="@color/bg_activities">
 
     <LinearLayout
-        android:orientation="vertical"
-        android:padding="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="10dp">
 
 
         <TextView
-            style="@style/AboutText"
             android:id="@+id/aboutCredits"
+            style="@style/AboutText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_credits" />
 
         <ImageView
-            android:layout_gravity="center"
-            android:src="@drawable/ic_chuck"
-            android:padding="20dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="20dp"
+            android:src="@drawable/ic_chuck" />
 
         <TextView
-            style="@style/AboutText"
             android:id="@+id/aboutBlog"
+            style="@style/AboutText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/about_blog" />
 
         <TextView
+            android:id="@+id/version"
             style="@style/AboutText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
