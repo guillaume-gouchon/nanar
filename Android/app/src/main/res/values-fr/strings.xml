@@ -4,7 +4,7 @@
     <string name="app_name">Nanar</string>
     <string name="placeholder">placeholder</string>
     <string name="viewholder">viewholder</string>
-    
+
     <!--Videos list-->
     <string name="loading">Chargement...</string>
     <string name="no_video">Pas de vidéo... pour l\'instant !</string>
@@ -16,6 +16,7 @@
     <string name="message_add_to_favorites">Très bon choix !</string>
     <string name="message_remove_to_favorites">T\'as changé d\'avis ?</string>
     <string name="share_video_subject">Regardez cette vidéo que j\'ai trouvé sur %s !</string>
+    <string name="youtube_init_failure">Une erreur est survenue en ouvrant le lecteur vidéo, veuillez mettre à jour Youtube</string>
 
     <!--Add Video Activity-->
     <string name="publish_video">Publier !</string>

@@ -16,6 +16,7 @@
     <string name="message_add_to_favorites">Good choice !</string>
     <string name="message_remove_to_favorites">You changed your mind ?</string>
     <string name="share_video_subject">Check out this video I have found on %s !</string>
+    <string name="youtube_init_failure">Error while opening Youtube player, please update your Youtube application</string>
 
     <!--Add Video Activity-->
     <string name="publish_video">Publish !</string>

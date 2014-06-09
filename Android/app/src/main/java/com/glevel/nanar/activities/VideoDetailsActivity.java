@@ -187,7 +187,10 @@ public class VideoDetailsActivity extends ActionBarActivity implements YouTubePl
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        mBigMessageLabel.setText(R.string.youtube_init_failure);
+        mBigMessageLabel.setTextColor(getResources().getColor(R.color.big_message_red));
+        mBigMessage.setVisibility(View.VISIBLE);
+        mBigMessage.startAnimation(AnimationUtils.loadAnimation(this.getApplicationContext(), R.anim.big_message_animation_long));
     }
-
 
 }
