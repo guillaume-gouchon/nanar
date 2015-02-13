@@ -1,11 +1,10 @@
 package com.glevel.nanar.activities;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -19,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import com.glevel.nanar.MyApplication;
@@ -129,18 +127,17 @@ public class AddVideoActivity extends ActionBarActivity implements View.OnClickL
                 return false;
             }
         });
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            // set adapter for auto complete
-            mAutoCompleteAdapter = new AutoCompleteAdapter(getApplicationContext());
-            mTagInput.setAdapter(mAutoCompleteAdapter);
-            mTagInput.setThreshold(AutoCompleteAdapter.AUTO_COMPLETE_MINIMUM_LETTER);
-            mTagInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                    addTag(((TextView) view).getText().toString());
-                }
-            });
-        }
+
+        // set adapter for auto complete
+        mAutoCompleteAdapter = new AutoCompleteAdapter(getApplicationContext());
+        mTagInput.setAdapter(mAutoCompleteAdapter);
+        mTagInput.setThreshold(AutoCompleteAdapter.AUTO_COMPLETE_MINIMUM_LETTER);
+        mTagInput.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                addTag(((TextView) view).getText().toString());
+            }
+        });
 
         mTagsLayout = (ViewGroup) findViewById(R.id.tagsLayout);
     }

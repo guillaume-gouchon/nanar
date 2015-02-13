@@ -5,8 +5,8 @@
 
     <item
         android:id="@+id/action_contact"
-        android:showAsAction="ifRoom"
+        app:showAsAction="ifRoom"
         android:title="@string/contact_menu_title"
-        app:showAsAction="ifRoom" />
+        android:icon="@drawable/ic_contact" />
 
 </menu>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.glevel.nanar">
+    package="com.glevel.nanar"
+    android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -8,17 +9,16 @@
     <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
 
     <application
-        android:name="com.glevel.nanar.MyApplication"
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:logo="@drawable/ic_logo"
-        android:theme="@style/Theme.Blue">
+        android:theme="@style/AppTheme">
 
         <activity
+            android:theme="@style/MainActivityTheme"
             android:name=".activities.MainActivity"
             android:label="@string/app_name"
-            android:logo="@drawable/ic_logo"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,14 +32,12 @@
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".activities.SearchActivity" />
-
         </activity>
 
         <activity
             android:name=".activities.SearchActivity"
             android:label="@string/search_activity_title"
             android:launchMode="singleTop"
-            android:logo="@drawable/ic_logo"
             android:parentActivityName=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
@@ -53,18 +51,15 @@
                 android:resource="@xml/searchable" />
         </activity>
 
-
         <activity
             android:name=".activities.VideoDetailsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/app_name"
-            android:logo="@drawable/ic_logo"
-            android:parentActivityName=".activities.MainActivity"></activity>
+            android:parentActivityName=".activities.MainActivity" />
 
         <activity
             android:name=".activities.AddVideoActivity"
             android:label="@string/app_name"
-            android:logo="@drawable/ic_logo"
             android:noHistory="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -74,7 +69,6 @@
                 <data
                     android:host="www.youtube.com"
                     android:mimeType="text/*" />
-
             </intent-filter>
         </activity>
 
@@ -82,15 +76,14 @@
         <activity
             android:name=".activities.AboutActivity"
             android:label="@string/about_title"
-            android:logo="@drawable/ic_logo"
             android:noHistory="true"
             android:parentActivityName=".activities.MainActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <provider
             android:name=".providers.ContentProvider"
             android:authorities="com.glevel.nanar"
-            android:exported="false"></provider>
+            android:exported="false" />
 
         <service
             android:name=".providers.sync.SyncService"

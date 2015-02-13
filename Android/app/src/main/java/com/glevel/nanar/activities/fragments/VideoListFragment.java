@@ -36,12 +36,11 @@ public abstract class VideoListFragment extends ListFragment implements LoaderMa
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_videos_list, container, false);
 
-        mVideoAdapter = new VideoAdapter(getActivity().getApplicationContext(), R.layout.video_list_item);
+        mVideoAdapter = new VideoAdapter(getActivity().getApplicationContext(), R.layout.video_item);
         setListAdapter(mVideoAdapter);
 
         // implements pull to refresh
         mSwipeLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_container);
-        mSwipeLayout.setColorScheme(R.color.action_bar_blue, R.color.big_message_green, R.color.big_message_green, R.color.big_message_green);
         mSwipeLayout.setOnRefreshListener(this);
 
         getLoaderManager().initLoader(GET_VIDEOS, null, this);

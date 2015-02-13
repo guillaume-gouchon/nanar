@@ -13,7 +13,7 @@
 
 
         <TextView
-            android:id="@+id/aboutCredits"
+            android:id="@+id/credits"
             style="@style/AboutText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -27,7 +27,7 @@
             android:src="@drawable/ic_chuck" />
 
         <TextView
-            android:id="@+id/aboutBlog"
+            android:id="@+id/about_blog"
             style="@style/AboutText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

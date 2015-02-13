@@ -1,7 +1,6 @@
 package com.glevel.nanar.activities;
 
 import android.database.Cursor;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -43,6 +42,8 @@ public class VideoDetailsActivity extends ActionBarActivity implements YouTubePl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_video_details);
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 
         // retrieve video object
         Bundle extras = getIntent().getExtras();
@@ -50,10 +51,6 @@ public class VideoDetailsActivity extends ActionBarActivity implements YouTubePl
 
         // update action bar title
         setTitle(mVideo.getTitle());
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        setContentView(R.layout.activity_video_details);
 
         // prepare youtube fragment
         mPlayerFragment = new YouTubePlayerSupportFragment();
@@ -112,14 +109,6 @@ public class VideoDetailsActivity extends ActionBarActivity implements YouTubePl
             case R.id.action_share:
                 shareVideo();
                 return true;
-        }
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.HONEYCOMB) {
-            switch (item.getItemId()) {
-                case android.R.id.home:
-                    finish();
-                    return true;
-            }
         }
 
         return super.onOptionsItemSelected(item);

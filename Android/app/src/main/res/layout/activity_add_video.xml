@@ -1,5 +1,4 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_activities"
@@ -14,17 +13,17 @@
 
         <include
             android:id="@+id/video"
-            layout="@layout/video_list_item"
+            layout="@layout/video_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
-        <android.support.v7.widget.GridLayout
+        <GridLayout
             android:id="@+id/tagsLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:columnCount="2"
-            app:orientation="horizontal"></android.support.v7.widget.GridLayout>
+            android:columnCount="2"
+            android:orientation="horizontal"></GridLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

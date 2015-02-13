@@ -23,18 +23,16 @@ public class VideoAdapter extends CursorAdapter {
 
     private final LayoutInflater mInflater;
     private final ImageLoader mImageLoader;
-    private final Animation inAnimation;
 
     public VideoAdapter(Context context, int flags) {
         super(context, null, flags);
         mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageLoader = ImageLoader.getInstance();
-        inAnimation = AnimationUtils.loadAnimation(context, R.anim.video_in_animation);
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
-        return mInflater.inflate(R.layout.video_list_item, null);
+        return mInflater.inflate(R.layout.video_item, null);
     }
 
     static class ViewHolder {
@@ -50,7 +48,6 @@ public class VideoAdapter extends CursorAdapter {
             viewHolder.title = (TextView) view.findViewById(R.id.title);
             viewHolder.thumbnail = (ImageView) view.findViewById(R.id.thumbnail);
             view.setTag(R.string.viewholder, viewHolder);
-            view.setAnimation(inAnimation);
         } else {
             viewHolder = (ViewHolder) view.getTag(R.string.viewholder);
         }

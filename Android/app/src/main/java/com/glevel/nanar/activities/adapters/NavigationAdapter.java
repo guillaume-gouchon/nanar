@@ -1,13 +1,14 @@
 package com.glevel.nanar.activities.adapters;
 
-import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.glevel.nanar.R;
+import com.glevel.nanar.activities.interfaces.OnListItemSelected;
 import com.glevel.nanar.models.navigation.NavItem;
 
 import java.util.List;
@@ -15,38 +16,54 @@ import java.util.List;
 /**
  * Created by guillaume on 5/28/14.
  */
-public class NavigationAdapter extends ArrayAdapter<NavItem> {
+public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.ViewHolder> {
 
-    private final LayoutInflater mInflater;
+    private List<NavItem> mItems;
+    private final OnListItemSelected<NavItem> mClickListener;
 
-    public NavigationAdapter(Context context, int resource, List<NavItem> objects) {
-        super(context, resource, objects);
-        mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    public NavigationAdapter(List<NavItem> items, OnListItemSelected<NavItem> clickListener) {
+        mItems = items;
+        mClickListener = clickListener;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        NavItem item = getItem(position);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int position) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.navigation_drawer_item, parent, false);
+        return new ViewHolder(view);
+    }
 
-        View v = convertView;
-        if (item.isHeader()) {
-            v = mInflater.inflate(R.layout.navigation_drawer_header_item, null);
-            v.setOnClickListener(null);
-            v.setOnLongClickListener(null);
-            v.setLongClickable(false);
-        } else {
-            v = mInflater.inflate(R.layout.navigation_drawer_item, null);
+    @Override
+    public void onBindViewHolder(ViewHolder viewHolder, int position) {
+        NavItem navItem = mItems.get(position);
+
+        viewHolder.title.setText(navItem.getText());
+        viewHolder.image.setImageResource(navItem.getIcon());
+
+        viewHolder.itemView.setTag(navItem);
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mClickListener.onItemSelected((NavItem) v.getTag());
+            }
+        });
+    }
+
+    @Override
+    public int getItemCount() {
+        return mItems.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView title;
+        public ImageView image;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            title = (TextView) itemView.findViewById(R.id.title);
+            image = (ImageView) itemView.findViewById(R.id.image);
         }
 
-        TextView tv = (TextView) v.findViewById(R.id.label);
-        tv.setText(item.getText());
-        if (!item.isHeader() && item.getIcon() > 0) {
-            tv.setCompoundDrawablesWithIntrinsicBounds(item.getIcon(), 0, 0, 0);
-        } else {
-            tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, 0, 0);
-        }
-
-        return v;
     }
 
 }

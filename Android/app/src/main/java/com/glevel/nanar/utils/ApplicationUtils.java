@@ -96,9 +96,6 @@ public class ApplicationUtils {
     public static void share(Activity activity, String subject, String text, int image) {
         Intent sharingIntent = new Intent(Intent.ACTION_SEND);
         sharingIntent.setType("text/plain");
-//        sharingIntent.setType("image/*");
-//        File imageFile = new File(Uri.parse("android.resource://" + activity.getPackageName() + "/drawable/" + image).toString());
-//        sharingIntent.putExtra(Intent.EXTRA_STREAM, Uri.fromFile(imageFile));
         sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
         sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, text);
         activity.startActivity(Intent.createChooser(sharingIntent, activity.getString(R.string.share_via)));

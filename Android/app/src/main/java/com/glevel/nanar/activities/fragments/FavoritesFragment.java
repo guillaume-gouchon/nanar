@@ -22,8 +22,7 @@ public class FavoritesFragment extends VideoListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ((ActionBarActivity) getActivity()).getSupportActionBar().setTitle(R.string.my_favourites);
 
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        return rootView;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     protected int getEmptyViewMessage() {

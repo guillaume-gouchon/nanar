@@ -1,6 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/label"
-    style="@style/NavigationDrawerItem"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content" />
+    android:layout_height="@dimen/navigation_drawer_item_height"
+    android:gravity="center"
+    android:background="?attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/navigation_drawer_item_padding_x"
+    android:paddingRight="@dimen/navigation_drawer_item_padding_x">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="@dimen/navigation_drawer_item_icon_size"
+        android:layout_height="@dimen/navigation_drawer_item_icon_size"
+        android:layout_marginRight="@dimen/navigation_drawer_item_icon_margin"
+        android:scaleType="centerInside" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        style="@style/NavigationDrawerItem"
+        android:text="@string/placeholder" />
+</LinearLayout>
