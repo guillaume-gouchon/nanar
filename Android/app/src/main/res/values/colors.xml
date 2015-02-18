@@ -9,5 +9,5 @@
     <color name="primary">#23a9ea</color>
     <color name="primary_dark">#176F99</color>
     <color name="bg_navigation_drawer">#dd88ccee</color>
-
+    <color name="ripple">#aa23a9ea</color>
 </resources>
