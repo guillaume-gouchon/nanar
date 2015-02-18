@@ -29,7 +29,7 @@
             android:background="@color/bg_activities" />
     </LinearLayout>
 
-    <com.glevel.nanar.views.OverStatusBarFrameLayout
+    <com.glevel.nanar.movies.views.OverStatusBarFrameLayout
         android:id="@+id/navigation_drawer"
         android:layout_width="@dimen/navigation_drawer_width"
         android:layout_height="match_parent"
@@ -43,7 +43,7 @@
             android:id="@+id/navigation_fragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:name="com.glevel.nanar.activities.fragments.NavigationDrawerFragment"
+            android:name="com.glevel.nanar.movies.activities.fragments.NavigationDrawerFragment"
             tools:layout="@layout/fragment_navigation_drawer" />
-    </com.glevel.nanar.views.OverStatusBarFrameLayout>
+    </com.glevel.nanar.movies.views.OverStatusBarFrameLayout>
 </android.support.v4.widget.DrawerLayout>

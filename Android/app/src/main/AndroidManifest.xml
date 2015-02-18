@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.glevel.nanar"
+    package="com.glevel.nanar.movies"
     android:installLocation="auto">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -82,7 +82,7 @@
 
         <provider
             android:name=".providers.ContentProvider"
-            android:authorities="com.glevel.nanar"
+            android:authorities="com.glevel.nanar.movies"
             android:exported="false" />
 
         <service
@@ -96,7 +96,7 @@
                 android:resource="@xml/syncadapter" />
         </service>
 
-        <service android:name="com.glevel.nanar.providers.sync.GenericAccountService">
+        <service android:name=".providers.sync.GenericAccountService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
