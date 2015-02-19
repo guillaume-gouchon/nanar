@@ -8,5 +8,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@android:color/transparent"
-        android:dividerHeight="@dimen/video_list_divider_height"></ListView>
+        android:drawSelectorOnTop="true"
+        android:dividerHeight="@dimen/video_list_divider_height" />
 </android.support.v4.widget.SwipeRefreshLayout>

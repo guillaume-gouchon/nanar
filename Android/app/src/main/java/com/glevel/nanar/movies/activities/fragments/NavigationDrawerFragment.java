@@ -125,7 +125,7 @@ public class NavigationDrawerFragment extends Fragment implements LoaderManager.
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         switch (id) {
             case GET_TAGS:
-                return new CursorLoader(getActivity().getApplicationContext(), ContentProvider.URI_TAGS, null, null, null, "RANDOM() LIMIT 10");
+                return new CursorLoader(getActivity().getApplicationContext(), ContentProvider.URI_TAGS, null, null, null, "RANDOM() LIMIT 15");
             default:
                 throw new IllegalStateException("Cannot create Loader with id[" + id + "]");
         }

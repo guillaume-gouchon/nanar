@@ -41,13 +41,16 @@
     <!--Video Item-->
 
     <style name="VideoItem">
-        <item name="android:padding">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">3dp</item>
+        <item name="android:paddingRight">3dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:background">@drawable/bg_video_item</item>
     </style>
 
     <style name="VideoItemTitle">
-        <item name="android:layout_marginLeft">5dp</item>
+        <item name="android:layout_marginLeft">2dp</item>
         <item name="android:gravity">center_vertical|left</item>
         <item name="android:textColor">#111</item>
         <item name="android:textSize">18sp</item>

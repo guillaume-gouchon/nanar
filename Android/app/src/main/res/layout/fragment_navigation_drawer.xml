@@ -1,8 +1,5 @@
 <android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawer_list"
-    android:paddingBottom="@dimen/navigation_drawer_header_padding_vertical"
-    android:paddingLeft="@dimen/navigation_drawer_header_padding_left"
-    android:paddingRight="@dimen/navigation_drawer_header_padding_right"
     android:paddingTop="@dimen/navigation_drawer_header_padding_top"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
