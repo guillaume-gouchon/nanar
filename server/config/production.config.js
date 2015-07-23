@@ -13,7 +13,7 @@ module.exports = {
 
     db: {
         name : 'nanar_prod',
-        host : mongo
+        host : 'nanarmongo'
     }
 
 };
