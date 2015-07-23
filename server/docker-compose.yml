@@ -5,6 +5,6 @@ nanar:
 nanarmongo:
     build: ./mongo
     volumes: 
-        - /var/mongodb:/data/db
+        - /var/mongodb:/data/db/nanar
     ports:
         - "27018"
