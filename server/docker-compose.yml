@@ -2,7 +2,7 @@ nanar:
     build: .
     ports:
         - "7000:7000"
-nanar-mongo:
+nanarmongo:
     build: ./mongo
     volumes: 
         - /var/mongodb:/data/db
