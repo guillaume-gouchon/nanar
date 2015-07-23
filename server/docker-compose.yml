@@ -1,0 +1,10 @@
+nanar:
+    build: .
+    ports:
+        - "7000:7000"
+mongo:
+    build: ./mongo
+    volumes: 
+        - /var/mongodb:/data/db
+    ports:
+        - "27017"
