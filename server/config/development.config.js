@@ -13,7 +13,7 @@ module.exports = {
 
     db: {
         name : 'nanar_dev',
-        host : 'localhost:27018'
+        host : 'localhost:27017'
     }
 
 };
